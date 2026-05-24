@@ -6,22 +6,22 @@
   <title>Choromi Valheim Server Guide</title>
   <style>
     :root {
-      --bg: #0b0f12;
-      --panel: rgba(255, 255, 255, 0.065);
-      --panel-strong: rgba(255, 255, 255, 0.105);
-      --line: rgba(255, 255, 255, 0.12);
+      --bg: #061017;
+      --panel: rgba(255, 241, 217, 0.062);
+      --panel-strong: rgba(255, 241, 217, 0.11);
+      --line: rgba(255, 219, 166, 0.14);
       --text: #f3efe6;
       --muted: rgba(243, 239, 230, 0.68);
       --soft: rgba(243, 239, 230, 0.48);
-      --gold: #d7a84f;
-      --amber: #f2c15c;
-      --red: #be5f43;
-      --green: #87a878;
+      --gold: #c78a3a;
+      --amber: #ffb34f;
+      --red: #a63d2f;
+      --green: #4f7f79;
       --shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
       --radius-lg: 28px;
       --radius-md: 20px;
       --radius-sm: 14px;
-      --hero-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1800' height='760' viewBox='0 0 1800 760'%3E%3Cdefs%3E%3ClinearGradient id='sky' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23233c45'/%3E%3Cstop offset='0.48' stop-color='%23112129'/%3E%3Cstop offset='1' stop-color='%23080c10'/%3E%3C/linearGradient%3E%3CradialGradient id='sun' cx='50%25' cy='24%25' r='36%25'%3E%3Cstop offset='0' stop-color='%23f1c36a' stop-opacity='0.85'/%3E%3Cstop offset='0.38' stop-color='%23b86545' stop-opacity='0.24'/%3E%3Cstop offset='1' stop-color='%23000000' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='1800' height='760' fill='url(%23sky)'/%3E%3Crect width='1800' height='760' fill='url(%23sun)'/%3E%3Cpath d='M0 430 L160 260 L280 410 L430 230 L590 425 L760 180 L930 430 L1080 250 L1250 435 L1400 210 L1570 430 L1800 230 L1800 760 L0 760Z' fill='%23101921'/%3E%3Cpath d='M0 485 L170 365 L360 505 L540 315 L730 500 L930 335 L1100 505 L1320 320 L1510 505 L1800 330 L1800 760 L0 760Z' fill='%230b1418' opacity='0.94'/%3E%3Cg fill='%23071313' opacity='0.98'%3E%3Cpath d='M0 565 h1800 v195 H0z'/%3E%3Cpath d='M65 560 l28-88 28 88h-22v74H87v-74z M145 585 l34-125 34 125h-26v68h-16v-68z M265 555 l26-84 26 84h-20v88h-12v-88z M410 570 l38-144 38 144h-29v82h-18v-82z M565 560 l25-88 25 88h-18v79h-14v-79z M720 578 l34-116 34 116h-25v77h-17v-77z M885 560 l28-94 28 94h-21v85h-14v-85z M1045 582 l38-142 38 142h-28v71h-20v-71z M1240 555 l24-88 24 88h-18v92h-12v-92z M1375 580 l36-130 36 130h-27v70h-18v-70z M1545 558 l27-91 27 91h-21v84h-12v-84z M1680 584 l38-125 38 125h-29v68h-18v-68z'/%3E%3C/g%3E%3Cg transform='translate(1120 542)' fill='%23080b0d' opacity='0.96'%3E%3Cpath d='M0 54 C85 78 215 76 305 48 C270 98 62 104 0 54Z'/%3E%3Cpath d='M140 0 C168 36 168 72 140 108 C124 68 124 38 140 0Z'/%3E%3Cpath d='M140 4 L242 72 L140 72Z' fill='%231b2b2d' opacity='0.8'/%3E%3Cpath d='M30 42 L74 20 L66 60Z'/%3E%3Ccircle cx='78' cy='32' r='8'/%3E%3C/g%3E%3C/svg%3E");
+      --hero-image: url("assets/valheim-hero.jpg");
     }
 
     * { box-sizing: border-box; }
@@ -32,9 +32,10 @@
       color: var(--text);
       font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background:
-        radial-gradient(circle at top left, rgba(215, 168, 79, 0.14), transparent 30%),
-        radial-gradient(circle at 82% 8%, rgba(190, 95, 67, 0.12), transparent 28%),
-        linear-gradient(180deg, #10171a 0%, #0b0f12 45%, #06080a 100%);
+        radial-gradient(circle at 50% -8%, rgba(255, 120, 52, 0.13), transparent 34%),
+        radial-gradient(circle at 12% 18%, rgba(28, 101, 112, 0.2), transparent 30%),
+        radial-gradient(circle at 86% 10%, rgba(128, 43, 34, 0.16), transparent 28%),
+        linear-gradient(180deg, #0b1b25 0%, #071116 42%, #050708 100%);
     }
 
     a { color: inherit; }
@@ -65,22 +66,6 @@
       color: var(--text);
     }
 
-    .brand-mark {
-      width: 44px;
-      height: 28px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      flex: none;
-    }
-
-    .brand-mark img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
-      filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.4));
-    }
 
     .nav-links {
       display: flex;
@@ -104,14 +89,14 @@
 
     .hero {
       position: relative;
-      min-height: 360px;
+      min-height: 390px;
       display: flex;
       align-items: flex-end;
       overflow: hidden;
       border-radius: var(--radius-lg);
       background:
-        linear-gradient(180deg, rgba(6, 9, 12, 0.08), rgba(6, 9, 12, 0.88)),
-        linear-gradient(90deg, rgba(6, 9, 12, 0.62), rgba(6, 9, 12, 0.08) 55%, rgba(6, 9, 12, 0.74)),
+        linear-gradient(180deg, rgba(4, 8, 11, 0.04), rgba(4, 8, 11, 0.9)),
+        linear-gradient(90deg, rgba(4, 8, 11, 0.72), rgba(4, 8, 11, 0.18) 54%, rgba(4, 8, 11, 0.74)),
         var(--hero-image) center / cover no-repeat;
       box-shadow: var(--shadow);
       border: 1px solid rgba(255, 255, 255, 0.12);
@@ -122,7 +107,7 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(circle at 22% 22%, rgba(242, 193, 92, 0.18), transparent 36%),
+        radial-gradient(circle at 46% 62%, rgba(255, 126, 45, 0.22), transparent 32%),
         linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.38) 100%);
       pointer-events: none;
     }
@@ -134,13 +119,6 @@
       width: 100%;
     }
 
-    .hero-logo {
-      width: min(420px, 76vw);
-      height: auto;
-      display: block;
-      margin: 0 0 18px;
-      filter: drop-shadow(0 18px 40px rgba(0, 0, 0, 0.58));
-    }
 
     .eyebrow {
       display: inline-flex;
@@ -165,7 +143,7 @@
       font-size: clamp(42px, 7vw, 82px);
       line-height: 0.95;
       letter-spacing: -0.065em;
-      text-shadow: 0 18px 46px rgba(0, 0, 0, 0.62);
+      text-shadow: 0 18px 46px rgba(0, 0, 0, 0.72), 0 0 24px rgba(174, 59, 38, 0.24);
     }
 
     .hero-meta {
@@ -544,7 +522,7 @@
 <body>
   <div class="page">
     <nav class="top-nav" aria-label="Page navigation">
-      <div class="brand"><span class="brand-mark"><img src="assets/choromi-logo.png" alt="" /></span><span>Choromi Server</span></div>
+      <div class="brand"><span>Choromi Server</span></div>
       <div class="nav-links">
         <a href="#profile">Profile</a>
         <a href="#install">Install</a>
@@ -556,7 +534,6 @@
 
     <header class="hero" id="hero">
       <div class="hero-content">
-        <img class="hero-logo" src="assets/choromi-logo.png" alt="Choromi" />
         <span class="eyebrow">Valheim Dedicated Server</span>
         <h1>Choromi Valheim</h1>
         <div class="hero-meta">
@@ -643,6 +620,10 @@
               <h3>최신 코드 재적용</h3>
               <p>모드 구성이 바뀌면 기존 프로필을 고치지 말고 최신 코드를 다시 Import해 주세요.</p>
             </article>
+            <article class="notice-card important">
+              <h3>크로스플레이 비활성화</h3>
+              <p>모드 서버 접속 시에는 Valheim 실행 옵션이나 서버 설정에서 Crossplay를 끄는 것을 권장합니다.</p>
+            </article>
             <article class="notice-card">
               <h3>캐릭터 백업 권장</h3>
               <p>기존 캐릭터 사용은 가능하지만 첫 접속 전 백업을 권장합니다.</p>
@@ -653,7 +634,7 @@
             </article>
             <article class="notice-card">
               <h3>레이드 규칙</h3>
-              <p>온라인 인원 3명 이상일 때 레이드가 발생하며, 발생 빈도는 15% 기준입니다.</p>
+              <p>온라인 인원 3명 이상일 때 레이드가 발생하며, 발생 빈도는 15% 기준입니다. 초원 거점은 레이드 제외 영역으로 운영합니다.</p>
             </article>
             <article class="notice-card">
               <h3>개인 설정</h3>
@@ -756,37 +737,37 @@
 
   <script>
     const mods = [
-      { name: "BepInExPack Valheim", group: "Dependency", icon: "BE", desc: "발헤임 모드 로더", tags: ["Required"] },
-      { name: "Jotunn", group: "Dependency", icon: "JO", desc: "다수 모드의 공통 라이브러리", tags: ["Required"] },
-      { name: "YamlDotNet", group: "Dependency", icon: "YA", desc: "YAML 설정 파일 처리용 의존성", tags: ["Required"] },
-      { name: "Zen ModLib", group: "Dependency", icon: "ZE", desc: "ZenRaids 계열 공통 라이브러리", tags: ["Required"] },
+      { name: "BepInExPack Valheim", group: "Dependency", icon: "BE", desc: "발헤임 모드 로더", tags: ["필수"] },
+      { name: "Jotunn", group: "Dependency", icon: "JO", desc: "다수 모드의 공통 라이브러리", tags: ["필수"] },
+      { name: "YamlDotNet", group: "Dependency", icon: "YA", desc: "YAML 설정 파일 처리용 의존성", tags: ["필수"] },
+      { name: "Zen ModLib", group: "Dependency", icon: "ZE", desc: "ZenRaids 계열 공통 라이브러리", tags: ["필수"] },
 
-      { name: "AzuCraftyBoxes", group: "Craft & Storage", icon: "CB", desc: "상자 안 재료로 제작/건축", tags: ["Server Sync"] },
-      { name: "AzuAutoStore", group: "Craft & Storage", icon: "AS", desc: "주변 상자로 자동 보관", tags: ["Server Sync"] },
-      { name: "Quick Stack Store Sort Trash Restock", group: "Craft & Storage", icon: "QS", desc: "수동 정리, 정렬, 보충, 폐기", tags: ["QoL"] },
-      { name: "Recycle N Reclaim", group: "Craft & Storage", icon: "RR", desc: "제작 아이템 회수/분해", tags: ["Server Sync"] },
-      { name: "AzuAreaRepair", group: "Craft & Storage", icon: "AR", desc: "망치 범위 수리", tags: ["QoL"] },
+      { name: "AzuCraftyBoxes", group: "Craft & Storage", icon: "CB", desc: "상자 안 재료로 제작/건축", tags: ["공통"] },
+      { name: "AzuAutoStore", group: "Craft & Storage", icon: "AS", desc: "주변 상자로 자동 보관", tags: ["공통"] },
+      { name: "Quick Stack Store Sort Trash Restock", group: "Craft & Storage", icon: "QS", desc: "수동 정리, 정렬, 보충, 폐기", tags: ["편의"] },
+      { name: "Recycle N Reclaim", group: "Craft & Storage", icon: "RR", desc: "제작 아이템 회수/분해", tags: ["공통"] },
+      { name: "AzuAreaRepair", group: "Craft & Storage", icon: "AR", desc: "망치 범위 수리", tags: ["편의"] },
 
-      { name: "AzuExtendedPlayerInventory", group: "Inventory", icon: "EI", desc: "인벤 확장, 장비 슬롯, 퀵슬롯", tags: ["Server Sync"] },
-      { name: "ItemStacksItemWeights", group: "Inventory", icon: "SW", desc: "아이템 스택/무게 조정", tags: ["Server Sync"] },
-      { name: "SkilledCarryWeight", group: "Inventory", icon: "CW", desc: "스킬 기반 소지 무게 증가", tags: ["QoL"] },
+      { name: "AzuExtendedPlayerInventory", group: "Inventory", icon: "EI", desc: "인벤 확장, 장비 슬롯, 퀵슬롯", tags: ["공통"] },
+      { name: "ItemStacksItemWeights", group: "Inventory", icon: "SW", desc: "아이템 스택/무게 조정", tags: ["공통"] },
+      { name: "SkilledCarryWeight", group: "Inventory", icon: "CW", desc: "스킬 기반 소지 무게 증가", tags: ["편의"] },
 
-      { name: "TeleportEverything", group: "Travel & Map", icon: "TE", desc: "광석, 주괴, 수레, 동물 포탈 이동", tags: ["Server Sync"] },
-      { name: "FastTeleport", group: "Travel & Map", icon: "FT", desc: "포탈 이동 시간 단축", tags: ["QoL"] },
-      { name: "DiscoveryPins", group: "Travel & Map", icon: "DP", desc: "발견 대상 자동 지도 핀", tags: ["Map"] },
-      { name: "Where You At", group: "Travel & Map", icon: "WY", desc: "지도 위치 공유 강제", tags: ["Server Sync"] },
+      { name: "TeleportEverything", group: "Travel & Map", icon: "TE", desc: "광석, 주괴, 수레, 동물 포탈 이동", tags: ["공통"] },
+      { name: "FastTeleport", group: "Travel & Map", icon: "FT", desc: "포탈 이동 시간 단축", tags: ["편의"] },
+      { name: "DiscoveryPins", group: "Travel & Map", icon: "DP", desc: "발견 대상 자동 지도 핀", tags: ["지도"] },
+      { name: "Where You At", group: "Travel & Map", icon: "WY", desc: "지도 위치 공유 강제", tags: ["공통"] },
 
-      { name: "SleepSkip", group: "Server Rules", icon: "SS", desc: "수면 투표와 밤 스킵", tags: ["Server Sync"] },
-      { name: "ZenRaids", group: "Server Rules", icon: "ZR", desc: "레이드 인원 조건과 빈도 제어", tags: ["Server Sync"] },
+      { name: "SleepSkip", group: "Server Rules", icon: "SS", desc: "수면 투표와 밤 스킵", tags: ["공통"] },
+      { name: "ZenRaids", group: "Server Rules", icon: "ZR", desc: "레이드 인원 조건과 빈도 제어", tags: ["공통"] },
 
-      { name: "PlantEverything", group: "Building & World", icon: "PE", desc: "식물, 베리, 버섯, 장식 재배 확장", tags: ["Build"] },
-      { name: "FloorsAreRoofs", group: "Building & World", icon: "FR", desc: "바닥을 지붕처럼 판정", tags: ["Build"] },
-      { name: "Seasonality", group: "Building & World", icon: "SE", desc: "계절감과 환경 분위기 변화", tags: ["Visual"] },
+      { name: "PlantEverything", group: "Building & World", icon: "PE", desc: "식물, 베리, 버섯, 장식 재배 확장", tags: ["건축"] },
+      { name: "FloorsAreRoofs", group: "Building & World", icon: "FR", desc: "바닥을 지붕처럼 판정", tags: ["건축"] },
+      { name: "Seasonality", group: "Building & World", icon: "SE", desc: "계절감과 환경 분위기 변화", tags: ["외형"] },
 
-      { name: "Balrond Character Customization", group: "Visual & UI", icon: "BC", desc: "캐릭터 커스터마이징 확장", tags: ["Visual"] },
-      { name: "DyeHard", group: "Visual & UI", icon: "DH", desc: "머리/수염 타입과 색상 변경", tags: ["Visual"] },
-      { name: "MyLittleUI", group: "Visual & UI", icon: "UI", desc: "UI 표시 개선", tags: ["Client"] },
-      { name: "EmoteWheelReworked", group: "Visual & UI", icon: "EW", desc: "감정표현 휠 개선", tags: ["Client"] }
+      { name: "Balrond Character Customization", group: "Visual & UI", icon: "BC", desc: "캐릭터 커스터마이징 확장", tags: ["외형"] },
+      { name: "DyeHard", group: "Visual & UI", icon: "DH", desc: "머리/수염 타입과 색상 변경", tags: ["외형"] },
+      { name: "MyLittleUI", group: "Visual & UI", icon: "UI", desc: "UI 표시 개선", tags: ["개인"] },
+      { name: "EmoteWheelReworked", group: "Visual & UI", icon: "EW", desc: "감정표현 휠 개선", tags: ["개인"] }
     ];
 
     const groupOrder = ["All", "Dependency", "Craft & Storage", "Inventory", "Travel & Map", "Server Rules", "Building & World", "Visual & UI"];
