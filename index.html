@@ -21,7 +21,8 @@
       --radius-lg: 28px;
       --radius-md: 20px;
       --radius-sm: 14px;
-      --hero-image: url("assets/valheim-hero.jpg");
+      --hero-wide: url("assets/valheim-hero-wide.jpg");
+      --hero-portrait: url("assets/valheim-hero-portrait.jpg");
     }
 
     * { box-sizing: border-box; }
@@ -89,17 +90,18 @@
 
     .hero {
       position: relative;
-      min-height: 390px;
+      min-height: 420px;
       display: flex;
       align-items: flex-end;
       overflow: hidden;
       border-radius: var(--radius-lg);
       background:
-        linear-gradient(180deg, rgba(4, 8, 11, 0.04), rgba(4, 8, 11, 0.9)),
-        linear-gradient(90deg, rgba(4, 8, 11, 0.72), rgba(4, 8, 11, 0.18) 54%, rgba(4, 8, 11, 0.74)),
-        var(--hero-image) center / cover no-repeat;
+        linear-gradient(0deg, rgba(3, 7, 9, 0.98) 0%, rgba(3, 7, 9, 0.92) 18%, rgba(3, 7, 9, 0.66) 46%, rgba(3, 7, 9, 0.42) 100%),
+        linear-gradient(90deg, rgba(3, 7, 9, 0.9) 0%, rgba(3, 7, 9, 0.72) 34%, rgba(3, 7, 9, 0.44) 62%, rgba(3, 7, 9, 0.82) 100%),
+        var(--hero-wide) center 54% / cover no-repeat;
       box-shadow: var(--shadow);
       border: 1px solid rgba(255, 255, 255, 0.12);
+      isolation: isolate;
     }
 
     .hero::before {
@@ -107,9 +109,21 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(circle at 46% 62%, rgba(255, 126, 45, 0.22), transparent 32%),
-        linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.38) 100%);
+        radial-gradient(circle at 49% 71%, rgba(255, 137, 49, 0.25), transparent 25%),
+        radial-gradient(circle at 50% 100%, rgba(0, 0, 0, 0.86), transparent 42%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0.68) 72%, rgba(0, 0, 0, 0.96) 100%);
       pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 42%;
+      background: linear-gradient(180deg, transparent, rgba(3, 7, 9, 0.96));
+      pointer-events: none;
+      z-index: 0;
     }
 
     .hero-content {
@@ -517,6 +531,18 @@
       .profile-box code { width: 100%; }
       .footer { flex-direction: column; align-items: flex-start; }
     }
+
+    @media (max-width: 700px) {
+      .hero {
+        min-height: 520px;
+        background:
+          linear-gradient(0deg, rgba(3, 7, 9, 0.98) 0%, rgba(3, 7, 9, 0.9) 22%, rgba(3, 7, 9, 0.62) 58%, rgba(3, 7, 9, 0.36) 100%),
+          linear-gradient(90deg, rgba(3, 7, 9, 0.88), rgba(3, 7, 9, 0.45), rgba(3, 7, 9, 0.78)),
+          var(--hero-portrait) center 44% / cover no-repeat;
+      }
+      .hero-content { padding: 34px 24px; }
+    }
+
   </style>
 </head>
 <body>
