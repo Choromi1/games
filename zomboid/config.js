@@ -7,8 +7,8 @@ window.ZOMBOID_CONFIG = {
   siteBaseUrl: "https://choromi1.github.io/games/zomboid",
 
   // Replace these two values after creating the Supabase project.
-  supabaseUrl: "https://YOUR_PROJECT_ID.supabase.co",
-  supabaseAnonKey: "YOUR_SUPABASE_ANON_KEY",
+  supabaseUrl: "https://dteuxildoqpgrqqiuilw.supabase.co",
+  supabaseAnonKey: "sb_publishable_DluO77PqPoP1siSilXIdQg_u0oWriQA",
 
   steamCollectionUrl: "",
   discordInviteUrl: "",
