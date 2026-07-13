@@ -141,7 +141,7 @@ img { max-width: 100%; }
   background: #11150e;
   box-shadow: 0 24px 60px rgba(0,0,0,0.46);
 }
-.hero-art img { width: 100%; height: 100%; display: block; object-fit: cover; filter: saturate(.9) contrast(1.08); }
+.hero-art img { width: 100%; height: 100%; display: block; object-fit: cover; object-position: center top; filter: saturate(.94) contrast(1.05); }
 .hero-art::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.02), transparent 55%, rgba(0,0,0,.48)); pointer-events: none; }
 .hero-status {
   position: absolute;
