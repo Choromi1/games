@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Choromi Project Zomboid 서버 공지 목록" />
+  <meta name="theme-color" content="#11150e" />
+  <title>서버 공지 | Choromi Project Zomboid</title>
+  <link rel="canonical" href="https://choromi1.github.io/games/zomboid/notices/" />
+  <link rel="stylesheet" href="../styles.css?v=20" />
+</head>
+<body>
+  <div class="page-shell">
+    <nav class="top-nav" aria-label="주요 메뉴">
+      <a class="brand" href="/games/zomboid/">
+        <span class="brand-mark">CZ</span>
+        <span><strong>Choromi</strong><small>Project Zomboid Server</small></span>
+      </a>
+      <button class="mobile-menu-button" type="button" aria-expanded="false" aria-controls="nav-panel">메뉴</button>
+      <div class="nav-panel" id="nav-panel">
+        <div class="game-switch"><a href="/games/Valheim/">Valheim</a><a class="active" href="/games/zomboid/">Zomboid</a></div>
+        <div class="nav-links"><a href="/games/zomboid/">홈</a><a href="/games/zomboid/#mods">모드팩</a><a href="/games/zomboid/#rules">규칙</a></div>
+      </div>
+    </nav>
+
+    <header class="subpage-header">
+      <span class="eyebrow">Server Notice Archive</span>
+      <h1>서버 공지</h1>
+      <p>점검, 업데이트, 이벤트와 주요 진행 안내를 확인할 수 있습니다.</p>
+    </header>
+
+    <main>
+      <section class="section" id="archive-view">
+        <div class="section-inner">
+          <div class="connection-banner hidden" id="supabase-demo-banner"><strong>미리보기 모드</strong><span>Supabase 연결 전이라 예시 공지를 표시하고 있습니다.</span></div>
+          <div class="archive-toolbar">
+            <div class="filter-chips" id="notice-filters" aria-label="공지 카테고리 필터"></div>
+            <label class="search-box"><span class="sr-only">공지 검색</span><input id="notice-search" type="search" placeholder="제목 또는 내용 검색" /></label>
+          </div>
+          <div class="archive-list" id="notice-list" aria-live="polite"></div>
+          <div class="pagination" id="pagination" aria-label="공지 페이지 이동"></div>
+        </div>
+      </section>
+
+      <article class="notice-detail hidden" id="detail-view" aria-live="polite"></article>
+    </main>
+
+    <footer class="footer">
+      <div><strong>Choromi Project Zomboid Server</strong><p>Survive together. Escape together.</p></div>
+      <div class="footer-links"><a href="/games/zomboid/">홈</a><a href="/games/zomboid/admin/">관리자</a></div>
+      <small>© <span data-current-year></span> Choromi</small>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
+  <script src="../config.js?v=20"></script>
+  <script src="../site.js?v=20"></script>
+  <script src="./notices.js?v=20"></script>
+</body>
+</html>
