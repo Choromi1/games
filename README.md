@@ -15,7 +15,6 @@ GitHub Pages 주소:
 
 ```text
 games/
-├─ .nojekyll
 ├─ index.html
 ├─ Valheim/
 │  ├─ index.html
@@ -40,7 +39,7 @@ games/
    │  ├─ setup.sql             # DB, RLS, Storage, Realtime 설정
    │  └─ README.md
    └─ assets/
-      └─ zomboid-hero.svg
+      └─ zomboid-main.webp
 ```
 
 ## 좀보이드 페이지 포함 기능
