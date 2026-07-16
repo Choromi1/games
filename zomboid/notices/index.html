@@ -7,21 +7,30 @@
   <meta name="theme-color" content="#11150e" />
   <title>서버 공지 | Choromi Project Zomboid</title>
   <link rel="canonical" href="https://choromi1.github.io/games/zomboid/notices/" />
-  <link rel="stylesheet" href="../styles.css?v=20" />
+  <link rel="stylesheet" href="../styles.css?v=22" />
+  <link rel="stylesheet" href="../../shared/chrome.css?v=1" />
 </head>
-<body>
+<body class="theme-zomboid">
   <div class="page-shell">
-    <nav class="top-nav" aria-label="주요 메뉴">
-      <a class="brand" href="/games/zomboid/">
-        <span class="brand-mark">CZ</span>
-        <span><strong>Choromi</strong><small>Project Zomboid Server</small></span>
+    <header class="global-header" data-global-header>
+      <a class="global-brand" href="/games/" aria-label="Choromi 게임 서버 선택 화면">
+        <span class="global-brand-mark">CG</span>
+        <span class="global-brand-copy"><strong>Choromi Game Servers</strong><small>Project Zomboid · Dedicated Server</small></span>
       </a>
-      <button class="mobile-menu-button" type="button" aria-expanded="false" aria-controls="nav-panel">메뉴</button>
-      <div class="nav-panel" id="nav-panel">
-        <div class="game-switch"><a href="/games/Valheim/">Valheim</a><a class="active" href="/games/zomboid/">Zomboid</a></div>
-        <div class="nav-links"><a href="/games/zomboid/">홈</a><a href="/games/zomboid/#mods">모드팩</a><a href="/games/zomboid/#rules">규칙</a></div>
+      <button class="global-menu-button" type="button" aria-expanded="false" aria-controls="global-nav-panel">메뉴</button>
+      <div class="global-nav-panel" id="global-nav-panel">
+        <nav class="global-game-switch" aria-label="게임 페이지 전환">
+          <a href="/games/Valheim/">Valheim</a>
+          <a class="active" aria-current="page" href="/games/zomboid/">Project Zomboid</a>
+        </nav>
+        <nav class="global-page-links" aria-label="현재 페이지 메뉴">
+          <a href="/games/zomboid/">홈</a>
+          <a href="/games/zomboid/notices/">공지 목록</a>
+          <a href="/games/zomboid/#mods">모드팩</a>
+          <a href="/games/zomboid/#rules">규칙</a>
+        </nav>
       </div>
-    </nav>
+    </header>
 
     <header class="subpage-header">
       <span class="eyebrow">Server Notice Archive</span>
@@ -45,9 +54,17 @@
       <article class="notice-detail hidden" id="detail-view" aria-live="polite"></article>
     </main>
 
-    <footer class="footer">
-      <div><strong>Choromi Project Zomboid Server</strong><p>Survive together. Escape together.</p></div>
-      <div class="footer-links"><a href="/games/zomboid/">홈</a><a href="/games/zomboid/admin/">관리자</a></div>
+    <footer class="global-footer">
+      <div class="global-footer-brand">
+        <span class="global-brand-mark">CG</span>
+        <div class="global-footer-copy"><strong>Choromi Game Servers</strong><span>Project Zomboid Notice Archive</span></div>
+      </div>
+      <nav class="global-footer-links" aria-label="사이트 하단 메뉴">
+        <a href="/games/">게임 선택</a>
+        <a href="/games/Valheim/">Valheim</a>
+        <a href="/games/zomboid/">Project Zomboid</a>
+        <a href="/games/zomboid/notices/">공지</a>
+      </nav>
       <small>© <span data-current-year></span> Choromi</small>
     </footer>
   </div>
@@ -56,6 +73,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
+  <script src="../../shared/chrome.js?v=1"></script>
   <script src="../config.js?v=20"></script>
   <script src="../site.js?v=20"></script>
   <script src="./notices.js?v=20"></script>

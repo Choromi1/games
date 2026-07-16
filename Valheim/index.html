@@ -6,26 +6,31 @@
   <meta name="description" content="Choromi Valheim dedicated server guide" />
   <title>Choromi Valheim Server Guide</title>
   <link rel="canonical" href="https://choromi1.github.io/games/Valheim/" />
-  <link rel="stylesheet" href="./styles.css?v=11" />
+  <link rel="stylesheet" href="./styles.css?v=12" />
+  <link rel="stylesheet" href="../shared/chrome.css?v=1" />
 </head>
-<body>
+<body class="theme-valheim">
   <div class="page">
-    <nav class="top-nav" aria-label="Page navigation">
-      <div class="brand"><span>Choromi Server</span></div>
-      <div class="nav-groups">
-        <div class="game-switch" aria-label="Game pages">
-          <a class="active" href="/games/Valheim/" aria-current="page">Valheim</a>
+    <header class="global-header" data-global-header>
+      <a class="global-brand" href="/games/" aria-label="Choromi 게임 서버 선택 화면">
+        <span class="global-brand-mark">CG</span>
+        <span class="global-brand-copy"><strong>Choromi Game Servers</strong><small>Valheim · Dedicated Server</small></span>
+      </a>
+      <button class="global-menu-button" type="button" aria-expanded="false" aria-controls="global-nav-panel">메뉴</button>
+      <div class="global-nav-panel" id="global-nav-panel">
+        <nav class="global-game-switch" aria-label="게임 페이지 전환">
+          <a class="active" aria-current="page" href="/games/Valheim/">Valheim</a>
           <a href="/games/zomboid/">Project Zomboid</a>
-        </div>
-        <div class="nav-links">
-          <a href="#install">Install</a>
-          <a href="#server">Server</a>
-          <a href="#notes">Notes</a>
-          <a href="#mods">Mods</a>
-          <a href="#troubleshooting">Troubleshooting</a>
-        </div>
+        </nav>
+        <nav class="global-page-links" aria-label="현재 페이지 메뉴">
+          <a href="#install">설치</a>
+          <a href="#server">서버 정보</a>
+          <a href="#notes">확인사항</a>
+          <a href="#mods">모드</a>
+          <a href="#troubleshooting">문제 해결</a>
+        </nav>
       </div>
-    </nav>
+    </header>
 
     <header class="hero" id="hero">
       <div class="hero-art" aria-hidden="true">
@@ -129,9 +134,22 @@
       </section>
     </main>
 
-    <footer class="footer"><div><strong>Choromi Valheim Server</strong><br /><span>Dedicated server guide · Last updated 2026-05-29</span></div><div>메롱</div></footer>
+    <footer class="global-footer">
+      <div class="global-footer-brand">
+        <span class="global-brand-mark">CG</span>
+        <div class="global-footer-copy"><strong>Choromi Game Servers</strong><span>Valheim Server Guide</span></div>
+      </div>
+      <nav class="global-footer-links" aria-label="사이트 하단 메뉴">
+        <a href="/games/">게임 선택</a>
+        <a href="/games/Valheim/">Valheim</a>
+        <a href="/games/zomboid/">Project Zomboid</a>
+        <a href="/games/zomboid/notices/">공지</a>
+      </nav>
+      <small>© <span data-current-year></span> Choromi</small>
+    </footer>
   </div>
   <div class="toast" id="toast">Copied</div>
+  <script src="../shared/chrome.js?v=1" defer></script>
   <script src="./script.js?v=10" defer></script>
 </body>
 </html>
