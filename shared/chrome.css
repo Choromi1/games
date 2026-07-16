@@ -55,19 +55,23 @@
 }
 
 .global-brand-mark {
-  width: 42px;
+  width: 96px;
   height: 42px;
-  flex: 0 0 42px;
-  display: grid;
-  place-items: center;
-  border: 1px solid color-mix(in srgb, var(--chrome-accent) 48%, transparent);
+  flex: 0 0 96px;
+  display: block;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--chrome-accent) 42%, transparent);
   border-radius: 13px;
-  color: var(--chrome-accent-ink);
-  background: linear-gradient(135deg, var(--chrome-accent), var(--chrome-accent-strong));
+  background: rgba(0, 0, 0, 0.18);
   box-shadow: 0 10px 26px var(--chrome-glow);
-  font-size: 13px;
-  font-weight: 950;
-  letter-spacing: -0.03em;
+}
+
+.global-brand-mark img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .global-brand-copy {
@@ -206,11 +210,10 @@
 }
 
 .global-footer .global-brand-mark {
-  width: 36px;
+  width: 82px;
   height: 36px;
-  flex-basis: 36px;
+  flex-basis: 82px;
   border-radius: 11px;
-  font-size: 11px;
 }
 
 .global-footer-copy strong,
@@ -282,9 +285,9 @@
   }
 
   .global-brand-mark {
-    width: 38px;
+    width: 86px;
     height: 38px;
-    flex-basis: 38px;
+    flex-basis: 86px;
     border-radius: 12px;
   }
 
