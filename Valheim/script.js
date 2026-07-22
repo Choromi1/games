@@ -95,26 +95,4 @@ const mods = [
       await copyTextToClipboard(code, "Profile code copied");
     });
 
-    document.querySelectorAll("[data-copy-text]").forEach((button) => {
-      button.addEventListener("click", async () => {
-        await copyTextToClipboard(button.dataset.copyText, button.dataset.toast || "Copied");
-      });
-    });
-
-    document.getElementById("toggle-password")?.addEventListener("click", (event) => {
-      const button = event.currentTarget;
-      const password = document.getElementById("server-password");
-      const visible = button.getAttribute("aria-pressed") === "true";
-
-      if (visible) {
-        password.textContent = "••••••••";
-        button.textContent = "Show";
-        button.setAttribute("aria-pressed", "false");
-      } else {
-        password.textContent = password.dataset.password;
-        button.textContent = "Hide";
-        button.setAttribute("aria-pressed", "true");
-      }
-    });
-
     renderMods();
