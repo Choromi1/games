@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#11150e" />
+  <title>공지 관리자 | Choromi Project Zomboid</title>
+  <link rel="stylesheet" href="../styles.css?v=20" />
+</head>
+<body class="admin-body">
+  <div class="admin-shell">
+    <header class="admin-topbar">
+      <a class="admin-brand" href="/games/zomboid/"><strong>Choromi Zomboid</strong><small>Notice Administration</small></a>
+      <a class="button secondary small" href="/games/zomboid/">공개 페이지 열기</a>
+    </header>
+
+    <main>
+      <section class="login-card" id="login-view">
+        <span class="eyebrow">Administrator Only</span>
+        <h1>관리자 로그인</h1>
+        <p>Supabase Auth에 등록된 관리자 계정만 공지를 작성·수정·삭제할 수 있습니다.</p>
+        <form class="form-stack" id="login-form">
+          <div class="form-group"><label for="login-email">이메일</label><input class="form-control" id="login-email" type="email" autocomplete="username" required /></div>
+          <div class="form-group"><label for="login-password">비밀번호</label><input class="form-control" id="login-password" type="password" autocomplete="current-password" required /></div>
+          <button class="button primary full" type="submit" id="login-button">로그인</button>
+          <p class="form-error" id="login-error" role="alert"></p>
+        </form>
+      </section>
+
+      <section class="admin-dashboard hidden" id="dashboard-view">
+        <div class="admin-hero">
+          <div><p class="section-kicker">Notice Dashboard</p><h1>공지 관리</h1><p><span id="admin-name">관리자</span> 계정으로 로그인했습니다.</p></div>
+          <div class="section-actions"><button class="button secondary" type="button" id="refresh-button">새로고침</button><button class="button ghost" type="button" id="logout-button">로그아웃</button></div>
+        </div>
+
+        <div class="admin-stats">
+          <article class="stat-card"><span>전체 공지</span><strong id="stat-total">0</strong></article>
+          <article class="stat-card"><span>공개 중</span><strong id="stat-published">0</strong></article>
+          <article class="stat-card"><span>예약 공개</span><strong id="stat-scheduled">0</strong></article>
+          <article class="stat-card"><span>임시 저장</span><strong id="stat-draft">0</strong></article>
+        </div>
+
+        <div class="admin-grid">
+          <section class="admin-panel" id="editor-panel">
+            <div class="admin-panel-head"><h2 id="editor-title">새 공지 작성</h2><button class="button secondary small" id="new-notice-button" type="button">새 문서</button></div>
+            <div class="admin-panel-body">
+              <form class="form-stack" id="notice-form">
+                <input type="hidden" id="notice-id" />
+                <div class="form-row">
+                  <div class="form-group"><label for="notice-category">분류</label><select class="form-control" id="notice-category"><option value="notice">공지</option><option value="important">중요</option><option value="update">업데이트</option><option value="maintenance">점검</option><option value="event">이벤트</option></select></div>
+                  <div class="form-group"><label for="notice-status">공개 상태</label><select class="form-control" id="notice-status"><option value="draft">임시 저장</option><option value="published">공개</option></select></div>
+                </div>
+                <div class="form-group"><label for="notice-title">제목</label><input class="form-control" id="notice-title" maxlength="120" required placeholder="공지 제목" /></div>
+                <div class="form-group"><label for="notice-summary">요약</label><textarea class="form-control" id="notice-summary" maxlength="300" style="min-height:90px" placeholder="메인 페이지에 표시할 짧은 요약"></textarea></div>
+                <div class="form-row">
+                  <div class="form-group"><label for="notice-published-at">공개 일시</label><input class="form-control" id="notice-published-at" type="datetime-local" /></div>
+                  <div class="form-group"><label for="notice-image">대표 이미지</label><input class="form-control" id="notice-image" type="file" accept="image/png,image/jpeg,image/webp,image/gif" /></div>
+                </div>
+                <div class="checkbox-row"><label><input id="notice-pinned" type="checkbox" /> 메인 상단 고정</label></div>
+                <div class="cover-preview" id="cover-preview"><img id="cover-preview-image" alt="대표 이미지 미리보기" /><button class="button danger small" type="button" id="remove-cover-button">이미지 제거</button></div>
+
+                <div class="form-group">
+                  <label>본문 (Markdown)</label>
+                  <div class="editor-tabs"><button class="editor-tab active" type="button" data-editor-tab="write">작성</button><button class="editor-tab" type="button" data-editor-tab="preview">미리보기</button></div>
+                  <textarea class="form-control" id="notice-content" required placeholder="## 점검 안내&#10;&#10;서버 점검 내용을 작성합니다."></textarea>
+                  <div class="editor-preview markdown-body hidden" id="editor-preview"></div>
+                </div>
+
+                <div class="section-actions">
+                  <button class="button primary" type="submit" id="save-button">공지 저장</button>
+                  <button class="button secondary" type="button" id="save-draft-button">임시 저장</button>
+                  <button class="button danger hidden" type="button" id="delete-current-button">현재 공지 삭제</button>
+                </div>
+                <p class="form-success" id="form-success" role="status"></p>
+                <p class="form-error" id="form-error" role="alert"></p>
+              </form>
+            </div>
+          </section>
+
+          <section class="admin-panel">
+            <div class="admin-panel-head"><h2>등록된 공지</h2><span class="muted" id="notice-result-count">0개</span></div>
+            <div class="admin-panel-body">
+              <div class="admin-list-toolbar">
+                <input class="form-control" id="admin-search" type="search" placeholder="공지 검색" />
+                <select class="form-control" id="admin-category"><option value="all">모든 분류</option><option value="important">중요</option><option value="notice">공지</option><option value="update">업데이트</option><option value="maintenance">점검</option><option value="event">이벤트</option></select>
+                <select class="form-control" id="admin-status"><option value="all">모든 상태</option><option value="published">공개</option><option value="scheduled">예약</option><option value="draft">임시 저장</option></select>
+              </div>
+              <div class="admin-notice-list" id="admin-notice-list" aria-live="polite"></div>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
+  <script src="../config.js?v=20"></script>
+  <script src="../site.js?v=20"></script>
+  <script src="./admin.js?v=20"></script>
+</body>
+</html>

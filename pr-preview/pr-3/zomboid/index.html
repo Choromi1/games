@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Choromi Project Zomboid 전용 서버 공지, 소개, 모드팩 및 접속 안내" />
+  <meta name="theme-color" content="#11150e" />
+  <title>Choromi Project Zomboid Server</title>
+  <link rel="canonical" href="https://choromi1.github.io/games/zomboid/" />
+  <link rel="stylesheet" href="./styles.css?v=22" />
+  <link rel="stylesheet" href="../shared/chrome.css?v=3" />
+</head>
+<body class="theme-zomboid">
+  <div class="page-shell">
+    <header class="global-header" data-global-header>
+      <a class="global-brand" href="/games/" aria-label="Choromi 게임 서버 선택 화면">
+        <span class="global-brand-mark"><img src="/games/shared/assets/choromi-brand.webp" alt="초로미" /></span>
+        <span class="global-brand-copy"><strong>Choromi Game Servers</strong><small>Project Zomboid · Dedicated Server</small></span>
+      </a>
+      <button class="global-menu-button" type="button" aria-expanded="false" aria-controls="global-nav-panel">메뉴</button>
+      <div class="global-nav-panel" id="global-nav-panel">
+        <nav class="global-game-switch" aria-label="게임 페이지 전환">
+          <a href="/games/Valheim/">Valheim</a>
+          <a class="active" aria-current="page" href="/games/zomboid/">Project Zomboid</a>
+        </nav>
+        <nav class="global-page-links" aria-label="현재 페이지 메뉴">
+          <a href="#notice">공지</a>
+          <a href="#server">서버 정보</a>
+          <a href="#mods">모드팩</a>
+          <a href="#campaign">진행 구조</a>
+          <a href="#rules">규칙</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+      </div>
+    </header>
+
+    <header class="hero" id="top">
+      <div class="hero-art">
+        <img src="./assets/zomboid-main.webp" alt="비 내리는 도시에서 좀비 무리를 돌파하는 Project Zomboid 메인 이미지" />
+        <div class="hero-status"><span class="status-dot"></span><span data-server-status>준비 중</span></div>
+      </div>
+      <div class="hero-content">
+        <span class="eyebrow">Project Zomboid Dedicated Server</span>
+        <h1>살아남고,<br />끝내 탈출하라.</h1>
+        <p class="hero-copy">거점을 성장시키고 위험 지역을 단계적으로 돌파해 최종 탈출 조건을 완성하는 4~5인 협동 생존 서버입니다.</p>
+        <div class="hero-meta">
+          <span class="pill" data-game-version>Build 42</span>
+          <span class="pill" data-player-count>4–5 Players</span>
+          <span class="pill">Modded Co-op</span>
+          <span class="pill warning" data-open-date>오픈일 추후 공지</span>
+        </div>
+        <div class="hero-actions">
+          <a class="button primary" href="#notice">최신 공지 보기</a>
+          <a class="button secondary" href="#mods">모드팩 확인</a>
+          <button class="button ghost" type="button" data-copy-page>페이지 링크 복사</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="section notice-section" id="notice" aria-labelledby="notice-title">
+        <div class="section-inner">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Server Notice</p>
+              <h2 id="notice-title">최신 공지</h2>
+              <p class="lead">오픈 전에는 준비 상황을, 오픈 후에는 점검·업데이트·이벤트 소식을 이곳에서 확인할 수 있습니다.</p>
+            </div>
+            <a class="text-link" href="/games/zomboid/notices/">전체 공지 보기 →</a>
+          </div>
+
+          <div class="connection-banner hidden" id="supabase-demo-banner" role="status">
+            <strong>미리보기 모드</strong>
+            <span>Supabase 연결 전이라 예시 공지를 표시하고 있습니다.</span>
+          </div>
+
+          <article class="featured-notice" id="featured-notice" aria-live="polite">
+            <div class="notice-skeleton"></div>
+          </article>
+
+          <div class="notice-grid" id="recent-notices" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="section" id="server" aria-labelledby="server-title">
+        <div class="section-inner">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Server Information</p>
+              <h2 id="server-title">접속 전에 확인할 정보</h2>
+              <p class="lead">서버 주소와 비밀번호가 공개되면 이 영역에서 바로 복사할 수 있습니다.</p>
+            </div>
+          </div>
+
+          <div class="server-layout">
+            <div class="server-card-grid">
+              <article class="info-card"><span>게임 버전</span><strong data-game-version>Build 42</strong><small>모드 호환성에 따라 변경될 수 있습니다.</small></article>
+              <article class="info-card"><span>예상 인원</span><strong data-player-count>4~5명</strong><small>협동 플레이 중심의 소규모 서버입니다.</small></article>
+              <article class="info-card"><span>서버 상태</span><strong data-server-status>준비 중</strong><small data-server-message>구성과 모드 테스트를 진행하고 있습니다.</small></article>
+              <article class="info-card"><span>최종 목표</span><strong>탈출 작전 완수</strong><small>단순 생존을 넘어 최종 지역 돌파가 목표입니다.</small></article>
+            </div>
+
+            <aside class="connect-panel">
+              <p class="card-label">Connection</p>
+              <h3>서버 접속 정보</h3>
+              <dl class="connection-list">
+                <div><dt>주소</dt><dd id="server-address">추후 공개</dd></div>
+                <div><dt>포트</dt><dd id="server-port">16261</dd></div>
+                <div><dt>비밀번호</dt><dd id="server-password">참가자 별도 안내</dd></div>
+              </dl>
+              <div class="panel-actions">
+                <button class="button primary full" id="copy-server-address" type="button">서버 주소 복사</button>
+                <a class="button secondary full" id="discord-link" href="#" target="_blank" rel="noopener">디스코드 열기</a>
+              </div>
+            </aside>
+          </div>
+
+          <div class="join-flow" aria-label="서버 접속 순서">
+            <article><span>01</span><div><strong>Steam 컬렉션 구독</strong><p>서버에 필요한 모드를 한 번에 구독합니다.</p></div></article>
+            <article><span>02</span><div><strong>게임 실행 및 다운로드</strong><p>Steam이 모드 다운로드를 완료할 때까지 기다립니다.</p></div></article>
+            <article><span>03</span><div><strong>서버 접속</strong><p>주소와 비밀번호를 입력해 서버에 접속합니다.</p></div></article>
+            <article><span>04</span><div><strong>누락 모드 확인</strong><p>접속 오류가 있다면 문제 해결 항목을 확인합니다.</p></div></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="mods" aria-labelledby="mods-title">
+        <div class="section-inner">
+          <div class="section-head mod-head">
+            <div>
+              <p class="section-kicker">Workshop Modpack</p>
+              <h2 id="mods-title">적용 모드와 모드팩</h2>
+              <p class="lead">참가자는 Steam 창작마당 컬렉션을 한 번에 구독하고, 서버에서는 동일한 Workshop ID와 Mod ID를 사용합니다.</p>
+            </div>
+            <div class="section-actions">
+              <a class="button primary" id="workshop-link" href="#" target="_blank" rel="noopener">Steam 모드팩 전체 구독</a>
+              <button class="button secondary" id="copy-workshop-link" type="button">컬렉션 링크 복사</button>
+            </div>
+          </div>
+
+          <div class="mod-toolbar">
+            <div class="filter-chips" id="mod-filters" aria-label="모드 카테고리 필터"></div>
+            <label class="search-box">
+              <span class="sr-only">모드 검색</span>
+              <input id="mod-search" type="search" placeholder="모드 이름 또는 설명 검색" autocomplete="off" />
+            </label>
+          </div>
+
+          <div class="mod-summary">
+            <span><strong id="mod-count">0</strong>개 모드 표시</span>
+            <span class="muted">필수 설치 여부와 주의사항을 카드에서 확인할 수 있습니다.</span>
+          </div>
+          <div class="mod-grid" id="mod-grid"></div>
+
+          <details class="troubleshooting">
+            <summary>모드 설치·접속 오류 해결</summary>
+            <div class="trouble-grid">
+              <article><strong>모드가 다운로드되지 않을 때</strong><p>Steam 다운로드 대기열을 확인한 뒤 게임과 Steam을 완전히 재시작합니다.</p></article>
+              <article><strong>Workshop item version 오류</strong><p>서버와 클라이언트의 모드 버전이 어긋난 경우입니다. 해당 모드를 구독 해제 후 다시 구독합니다.</p></article>
+              <article><strong>지도 모드 충돌</strong><p>기존 월드에 지도 모드를 추가하면 문제가 생길 수 있으므로 서버 공지를 먼저 확인합니다.</p></article>
+              <article><strong>계속 접속이 안 될 때</strong><p>오류 화면을 캡처하고 console.txt 로그와 함께 디스코드에 공유합니다.</p></article>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="section" id="campaign" aria-labelledby="campaign-title">
+        <div class="section-inner">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Campaign Flow</p>
+              <h2 id="campaign-title">생존에서 탈출까지</h2>
+              <p class="lead">초반 생활권은 비교적 여유롭게, 탈출에 가까워질수록 전투와 준비 부담이 커지는 구조입니다.</p>
+            </div>
+          </div>
+
+          <div class="campaign-flow">
+            <article><span>01</span><div><small>SURVIVE</small><h3>초기 생존</h3><p>식량과 의약품을 확보하고 임시 거점을 마련합니다.</p></div></article>
+            <article><span>02</span><div><small>BUILD</small><h3>거점 성장</h3><p>농사, 발전기, 차량, 제작 시설과 장기 비축 체계를 갖춥니다.</p></div></article>
+            <article><span>03</span><div><small>EXPLORE</small><h3>지역 탐사</h3><p>도시와 특수 지역을 조사하며 희귀 장비와 탈출 단서를 찾습니다.</p></div></article>
+            <article><span>04</span><div><small>PREPARE</small><h3>탈출 준비</h3><p>총기, 탄약, 차량, 치료 물품을 모으고 작전 경로를 정찰합니다.</p></div></article>
+            <article class="critical"><span>05</span><div><small>ESCAPE</small><h3>최종 작전</h3><p>고밀도 좀비 구역을 돌파하고 서버의 최종 조건을 완성합니다.</p></div></article>
+          </div>
+
+          <div class="danger-grid" aria-label="지역별 위험도">
+            <article style="--risk:18%"><div><strong>시작 지역</strong><em>LOW</em></div><i><b></b></i><p>기본 물자 확보와 초반 적응을 위한 완충 구역입니다.</p></article>
+            <article style="--risk:38%"><div><strong>일반 도시</strong><em>MEDIUM</em></div><i><b></b></i><p>상점과 병원이 있지만 장시간 소음과 체류는 위험합니다.</p></article>
+            <article style="--risk:62%"><div><strong>군사·산업 지역</strong><em>HIGH</em></div><i><b></b></i><p>희귀 장비와 대량 물자 대신 강한 저항이 예상됩니다.</p></article>
+            <article style="--risk:82%"><div><strong>탈출 준비 지역</strong><em>SEVERE</em></div><i><b></b></i><p>정찰과 보급 거점 없이는 장기 작전이 어렵습니다.</p></article>
+            <article class="critical" style="--risk:100%"><div><strong>최종 탈출 지역</strong><em>CRITICAL</em></div><i><b></b></i><p>팀 역할 분담과 충분한 탄약·치료 물품이 필요합니다.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="playstyle" aria-labelledby="playstyle-title">
+        <div class="section-inner">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Core Playstyle</p>
+              <h2 id="playstyle-title">전투와 생활이 함께 굴러가는 서버</h2>
+              <p class="lead">총기를 잘 다루는 플레이어뿐 아니라 거점을 유지하는 플레이어도 캠페인의 핵심입니다.</p>
+            </div>
+          </div>
+
+          <div class="feature-grid">
+            <article><span>A</span><h3>총기와 전투</h3><p>총기는 강력하지만 소음과 탄약 소비가 큽니다. 근접 무기, 유인, 후퇴 경로를 함께 준비합니다.</p><ul><li>총기 및 탄약 확장</li><li>대규모 좀비 유입 위험</li><li>작전별 장비 배분</li></ul></article>
+            <article><span>B</span><h3>생활과 거점</h3><p>농사와 요리, 발전기, 창고 정리, 방어 시설이 장기 작전의 지속 시간을 결정합니다.</p><ul><li>식량 생산과 보존</li><li>거점 건설 및 방어</li><li>의약품·장비 비축</li></ul></article>
+            <article><span>C</span><h3>차량과 정비</h3><p>차량은 이동 수단이자 탈출 작전의 핵심 자원입니다. 연료와 부품, 예비 차량을 관리합니다.</p><ul><li>차량 수리와 부품 관리</li><li>연료 보급망 구축</li><li>비상 철수 차량 준비</li></ul></article>
+            <article><span>D</span><h3>탐사와 기록</h3><p>지도 표시와 정찰 결과를 공유해 안전 경로, 물자 위치, 위험 구역을 팀 자산으로 축적합니다.</p><ul><li>도시 및 특수 지역 탐사</li><li>지도 기록과 경로 공유</li><li>탈출 단서 수집</li></ul></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="rules" aria-labelledby="rules-title">
+        <div class="section-inner">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Server Rules</p>
+              <h2 id="rules-title">협동 플레이 기본 규칙</h2>
+              <p class="lead">진행을 막는 통제보다 서로의 시간과 준비물을 지키기 위한 최소 규칙입니다.</p>
+            </div>
+          </div>
+          <div class="rules-grid">
+            <article><span>01</span><div><h3>개인·공용 물품 구분</h3><p>희귀 물자와 중요 장비는 소유자 또는 팀원에게 알린 뒤 사용합니다.</p></div></article>
+            <article><span>02</span><div><h3>거점 변경은 먼저 공유</h3><p>창고 재배치, 벽 철거, 발전기 이동 등은 다른 참가자와 상의합니다.</p></div></article>
+            <article><span>03</span><div><h3>버그·복사 악용 금지</h3><p>아이템 복사나 비정상 경험치 획득처럼 진행을 무너뜨리는 행동은 사용하지 않습니다.</p></div></article>
+            <article><span>04</span><div><h3>좀비 유입 즉시 공유</h3><p>거점 방향으로 무리가 이동하거나 차량 경적 사고가 발생하면 팀에 먼저 알립니다.</p></div></article>
+            <article><span>05</span><div><h3>주요 콘텐츠는 함께</h3><p>탈출 관련 지역과 특수 시설, 대규모 전투는 여러 명이 접속했을 때 진행합니다.</p></div></article>
+            <article><span>06</span><div><h3>사망 복구보다 생존 우선</h3><p>위험 지역의 장비는 무리하게 회수하지 않고 인원을 재정비한 뒤 접근합니다.</p></div></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="faq" aria-labelledby="faq-title">
+        <div class="section-inner">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Frequently Asked Questions</p>
+              <h2 id="faq-title">자주 묻는 질문</h2>
+            </div>
+          </div>
+          <div class="faq-list">
+            <details><summary>모드를 직접 하나씩 찾아 설치해야 하나요?</summary><p>아니요. 서버용 Steam 창작마당 컬렉션에서 ‘모두 구독’을 누르면 필요한 모드를 한 번에 받을 수 있습니다.</p></details>
+            <details><summary>전투를 잘하지 못해도 참여할 수 있나요?</summary><p>가능합니다. 농사, 요리, 정비, 건축, 물자 관리와 지도 기록도 서버 진행에 중요한 역할입니다.</p></details>
+            <details><summary>캐릭터가 사망하면 서버 진행에서 제외되나요?</summary><p>아닙니다. 새로운 캐릭터로 다시 합류할 수 있으며, 장비 복구는 생존 가능성을 우선해 결정합니다.</p></details>
+            <details><summary>모드 업데이트 후 접속 오류가 나면 어떻게 하나요?</summary><p>Steam과 게임을 재시작한 뒤 문제가 계속되면 오류 화면과 console.txt 로그를 디스코드에 공유합니다.</p></details>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="global-footer">
+      <div class="global-footer-brand">
+        <span class="global-brand-mark"><img src="/games/shared/assets/choromi-brand.webp" alt="초로미" /></span>
+        <div class="global-footer-copy"><strong>Choromi Game Servers</strong><span>Project Zomboid Server</span></div>
+      </div>
+      <nav class="global-footer-links" aria-label="사이트 하단 메뉴">
+        <a href="/games/">게임 선택</a>
+        <a href="/games/Valheim/">Valheim</a>
+        <a href="/games/zomboid/">Project Zomboid</a>
+        <a href="/games/zomboid/notices/">공지</a>
+      </nav>
+      <small>© <span data-current-year></span> Choromi</small>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
+  <script src="../shared/chrome.js?v=1"></script>
+  <script src="./config.js?v=20"></script>
+  <script src="./site.js?v=20"></script>
+  <script src="./mods-data.js?v=20"></script>
+  <script src="./app.js?v=20"></script>
+</body>
+</html>
