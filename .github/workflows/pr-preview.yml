@@ -21,8 +21,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        if: github.event.action != 'closed'
+      - name: Checkout repository  
         uses: actions/checkout@v4
 
       - name: Deploy preview
