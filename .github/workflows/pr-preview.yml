@@ -29,6 +29,6 @@ jobs:
         uses: rossjrw/pr-preview-action@v1
         with:
           source-dir: .
-          preview-branch: gh-pages
+          preview-branch: gh-pages2
           wait-for-pages-deployment: true
           qr-code: false
