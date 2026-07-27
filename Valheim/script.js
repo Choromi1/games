@@ -95,4 +95,35 @@ const mods = [
       await copyTextToClipboard(code, "Profile code copied");
     });
 
+    async function renderValheimNotices() {
+      const container = document.getElementById("valheim-notices");
+      const noticeSite = window.ChoromiNotices;
+      if (!container || !noticeSite) return;
+      try {
+        const notices = await noticeSite.fetchPublishedNotices(3, "valheim");
+        if (!notices.length) {
+          container.innerHTML = `<div class="shared-notice-empty">등록된 발헤임 공지가 없습니다.</div>`;
+          return;
+        }
+        container.innerHTML = notices.map((notice) => {
+          const category = noticeSite.categoryInfo(notice.category);
+          return `
+            <a class="shared-notice-card" href="${noticeSite.noticeUrl(notice.id, "valheim")}">
+              <div class="shared-notice-meta">
+                <span>${noticeSite.escapeHTML(category.label)}</span>
+                <time datetime="${noticeSite.escapeHTML(notice.published_at)}">${noticeSite.formatDate(notice.published_at)}</time>
+              </div>
+              <h3>${noticeSite.escapeHTML(notice.title)}</h3>
+              <p>${noticeSite.escapeHTML(notice.summary || "자세한 내용은 공지에서 확인해 주세요.")}</p>
+              <strong>자세히 보기 →</strong>
+            </a>
+          `;
+        }).join("");
+      } catch (error) {
+        console.error("발헤임 공지 로딩 실패", error);
+        container.innerHTML = `<div class="shared-notice-empty">공지를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.</div>`;
+      }
+    }
+
     renderMods();
+    renderValheimNotices();
