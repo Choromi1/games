@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const site = window.ZomboidSite;
+  const site = window.ChoromiNotices;
   if (!site) return;
   const client = site.client;
 
@@ -12,9 +12,9 @@
   const loginPassword = document.getElementById("login-password");
   const loginButton = document.getElementById("login-button");
   const loginError = document.getElementById("login-error");
-
   const noticeForm = document.getElementById("notice-form");
   const noticeId = document.getElementById("notice-id");
+  const noticeGame = document.getElementById("notice-game");
   const noticeCategory = document.getElementById("notice-category");
   const noticeStatus = document.getElementById("notice-status");
   const noticeTitle = document.getElementById("notice-title");
@@ -33,15 +33,16 @@
   const formSuccess = document.getElementById("form-success");
   const formError = document.getElementById("form-error");
   const editorTitle = document.getElementById("editor-title");
-
   const adminList = document.getElementById("admin-notice-list");
   const adminSearch = document.getElementById("admin-search");
+  const adminGame = document.getElementById("admin-game");
   const adminCategory = document.getElementById("admin-category");
   const adminStatus = document.getElementById("admin-status");
   const resultCount = document.getElementById("notice-result-count");
 
   let currentUser = null;
   let adminProfile = null;
+  let games = [];
   let notices = [];
   let currentCoverUrl = "";
   let removeCurrentCover = false;
@@ -91,8 +92,13 @@
 
   function statusInfo(notice) {
     if (notice.status !== "published") return { value: "draft", label: "임시 저장" };
-    const scheduled = new Date(notice.published_at).getTime() > Date.now();
-    return scheduled ? { value: "scheduled", label: "예약 공개" } : { value: "published", label: "공개 중" };
+    return new Date(notice.published_at).getTime() > Date.now()
+      ? { value: "scheduled", label: "예약 공개" }
+      : { value: "published", label: "공개 중" };
+  }
+
+  function gameInfo(gameKey) {
+    return site.getGame(gameKey, games) || { game_key: gameKey, name: gameKey };
   }
 
   function clearMessages() {
@@ -110,9 +116,15 @@
     }
   }
 
+  function populateGames() {
+    noticeGame.innerHTML = games.map((game) => `<option value="${site.escapeHTML(game.game_key)}">${site.escapeHTML(game.name)}</option>`).join("");
+    adminGame.innerHTML = `<option value="all">모든 게임</option>${games.map((game) => `<option value="${site.escapeHTML(game.game_key)}">${site.escapeHTML(game.name)}</option>`).join("")}`;
+  }
+
   function resetForm() {
     noticeForm.reset();
     noticeId.value = "";
+    if (games.length) noticeGame.value = games.some((game) => game.game_key === "zomboid") ? "zomboid" : games[0].game_key;
     noticeCategory.value = "notice";
     noticeStatus.value = "draft";
     noticePublishedAt.value = nowInputValue();
@@ -139,20 +151,17 @@
     currentUser = session?.user || null;
     if (!currentUser) return false;
 
-    const { data, error } = await client.rpc("is_admin");
+    const { data: profile, error } = await client
+      .from("admin_users")
+      .select("user_id, display_name")
+      .eq("user_id", currentUser.id)
+      .maybeSingle();
     if (error) throw error;
-    if (!data) {
+    if (!profile) {
       await client.auth.signOut();
       currentUser = null;
       throw new Error("관리자 권한이 없는 계정입니다.");
     }
-
-    const { data: profile, error: profileError } = await client
-      .from("admin_users")
-      .select("user_id, display_name")
-      .eq("user_id", currentUser.id)
-      .single();
-    if (profileError) throw profileError;
     adminProfile = profile;
     document.getElementById("admin-name").textContent = profile.display_name || currentUser.email || "관리자";
     return true;
@@ -167,6 +176,12 @@
     dashboardView.classList.add("hidden");
     loginView.classList.remove("hidden");
     loginError.textContent = message;
+  }
+
+  async function loadGames() {
+    games = await site.fetchGames();
+    if (!games.length) throw new Error("활성화된 게임이 없습니다.");
+    populateGames();
   }
 
   async function loadNotices() {
@@ -193,10 +208,11 @@
     const keyword = String(adminSearch.value || "").trim().toLocaleLowerCase("ko-KR");
     return notices.filter((notice) => {
       const state = statusInfo(notice).value;
+      const gameMatch = adminGame.value === "all" || notice.game_key === adminGame.value;
       const categoryMatch = adminCategory.value === "all" || notice.category === adminCategory.value;
       const statusMatch = adminStatus.value === "all" || state === adminStatus.value;
       const haystack = `${notice.title} ${notice.summary} ${notice.content}`.toLocaleLowerCase("ko-KR");
-      return categoryMatch && statusMatch && (!keyword || haystack.includes(keyword));
+      return gameMatch && categoryMatch && statusMatch && (!keyword || haystack.includes(keyword));
     });
   }
 
@@ -210,12 +226,13 @@
     adminList.innerHTML = list.map((notice) => {
       const category = site.categoryInfo(notice.category);
       const state = statusInfo(notice);
-      const canView = state.value === "published";
+      const game = gameInfo(notice.game_key);
       return `
         <article class="admin-notice-item">
           <div class="admin-notice-item-top">
             <div>
               <div class="notice-topline">
+                <span class="game-badge ${site.escapeHTML(notice.game_key)}">${site.escapeHTML(game.name)}</span>
                 <span class="notice-badge ${site.escapeHTML(category.className)}">${site.escapeHTML(category.label)}</span>
                 <span class="status-badge ${state.value}">${state.label}</span>
                 ${notice.is_pinned ? '<span class="notice-pin">● 고정</span>' : ""}
@@ -228,7 +245,7 @@
           <footer>
             <button class="button secondary small" type="button" data-edit-id="${site.escapeHTML(notice.id)}">수정</button>
             <button class="button danger small" type="button" data-delete-id="${site.escapeHTML(notice.id)}">삭제</button>
-            ${canView ? `<a class="button ghost small" href="${site.noticeUrl(notice.id)}" target="_blank" rel="noopener">공개 화면</a>` : ""}
+            ${state.value === "published" ? `<a class="button ghost small" href="${site.noticeUrl(notice.id, notice.game_key)}" target="_blank" rel="noopener">공개 화면</a>` : ""}
           </footer>
         </article>
       `;
@@ -239,6 +256,7 @@
     const notice = notices.find((item) => item.id === id);
     if (!notice) return;
     noticeId.value = notice.id;
+    noticeGame.value = notice.game_key;
     noticeCategory.value = notice.category;
     noticeStatus.value = notice.status;
     noticeTitle.value = notice.title;
@@ -275,7 +293,6 @@
     if (!file) return currentCoverUrl;
     if (!file.type.startsWith("image/")) throw new Error("이미지 파일만 업로드할 수 있습니다.");
     if (file.size > 5 * 1024 * 1024) throw new Error("대표 이미지는 5MB 이하만 업로드할 수 있습니다.");
-
     const extension = (file.name.split(".").pop() || "jpg").toLowerCase().replace(/[^a-z0-9]/g, "");
     const random = window.crypto?.randomUUID?.() || Math.random().toString(36).slice(2);
     const path = `${currentUser.id}/${Date.now()}-${random}.${extension}`;
@@ -287,6 +304,11 @@
 
   async function saveNotice(forcedStatus = null) {
     clearMessages();
+    if (!noticeGame.value) {
+      formError.textContent = "대상 게임을 선택해 주세요.";
+      noticeGame.focus();
+      return;
+    }
     if (!noticeTitle.value.trim()) {
       formError.textContent = "제목을 입력해 주세요.";
       noticeTitle.focus();
@@ -316,6 +338,7 @@
       }
 
       const payload = {
+        game_key: noticeGame.value,
         category: noticeCategory.value,
         title: noticeTitle.value.trim(),
         summary: noticeSummary.value.trim(),
@@ -328,15 +351,12 @@
         author_name: adminProfile?.display_name || currentUser.email || "Choromi"
       };
 
-      let error;
-      if (noticeId.value) {
-        ({ error } = await client.from("notices").update(payload).eq("id", noticeId.value));
-      } else {
-        ({ error } = await client.from("notices").insert(payload));
-      }
-      if (error) {
+      const result = noticeId.value
+        ? await client.from("notices").update(payload).eq("id", noticeId.value)
+        : await client.from("notices").insert(payload);
+      if (result.error) {
         if (newlyUploadedCover) await removeStoredImage(newlyUploadedCover);
-        throw error;
+        throw result.error;
       }
       if (oldCoverToDelete) await removeStoredImage(oldCoverToDelete);
 
@@ -357,7 +377,6 @@
     const notice = notices.find((item) => item.id === id);
     if (!notice) return;
     if (!window.confirm(`‘${notice.title}’ 공지를 삭제할까요? 이 작업은 되돌릴 수 없습니다.`)) return;
-
     const { error } = await client.from("notices").delete().eq("id", id);
     if (error) {
       site.showToast("공지 삭제에 실패했습니다.");
@@ -375,7 +394,7 @@
       event.preventDefault();
       loginError.textContent = "";
       if (!client) {
-        loginError.textContent = "config.js에 Supabase URL과 anon key를 먼저 입력해 주세요.";
+        loginError.textContent = "공용 Supabase 설정을 먼저 입력해 주세요.";
         return;
       }
       setLoading(loginButton, true, "로그인 중...");
@@ -383,10 +402,11 @@
         const { data, error } = await client.auth.signInWithPassword({ email: loginEmail.value.trim(), password: loginPassword.value });
         if (error) throw error;
         await verifyAdmin(data.session);
+        await loadGames();
         showDashboard();
         resetForm();
         await loadNotices();
-        channel = site.subscribeToNotices(() => loadNotices());
+        channel = site.subscribeToNotices(loadNotices);
       } catch (error) {
         loginError.textContent = error.message || "로그인에 실패했습니다.";
       } finally {
@@ -402,21 +422,18 @@
       adminProfile = null;
       showLogin("로그아웃했습니다.");
     });
-
     document.getElementById("refresh-button").addEventListener("click", async () => {
-      await loadNotices();
+      await Promise.all([loadGames(), loadNotices()]);
       site.showToast("목록을 새로고침했습니다.");
     });
     document.getElementById("new-notice-button").addEventListener("click", resetForm);
     noticeForm.addEventListener("submit", (event) => { event.preventDefault(); saveNotice(); });
     saveDraftButton.addEventListener("click", () => saveNotice("draft"));
     deleteCurrentButton.addEventListener("click", () => deleteNotice(noticeId.value));
-
     document.querySelectorAll("[data-editor-tab]").forEach((button) => button.addEventListener("click", () => switchEditorTab(button.dataset.editorTab)));
     noticeContent.addEventListener("input", () => {
       if (!editorPreview.classList.contains("hidden")) editorPreview.innerHTML = site.renderMarkdown(noticeContent.value);
     });
-
     noticeImage.addEventListener("change", () => {
       const file = noticeImage.files?.[0];
       if (!file) {
@@ -428,37 +445,31 @@
         noticeImage.value = "";
         return;
       }
-      const url = URL.createObjectURL(file);
-      setCoverPreview(url);
+      setCoverPreview(URL.createObjectURL(file));
       removeCurrentCover = false;
     });
-
     removeCoverButton.addEventListener("click", () => {
       noticeImage.value = "";
       removeCurrentCover = true;
       setCoverPreview("");
     });
-
     adminList.addEventListener("click", (event) => {
       const editButton = event.target.closest("[data-edit-id]");
       const deleteButton = event.target.closest("[data-delete-id]");
       if (editButton) editNotice(editButton.dataset.editId);
       if (deleteButton) deleteNotice(deleteButton.dataset.deleteId);
     });
-
-    [adminSearch, adminCategory, adminStatus].forEach((element) => element.addEventListener("input", renderAdminList));
+    [adminSearch, adminGame, adminCategory, adminStatus].forEach((element) => element.addEventListener("input", renderAdminList));
   }
 
   async function init() {
     bindEvents();
     resetForm();
-
     if (!site.isConfigured()) {
-      showLogin("config.js에 Supabase URL과 anon key를 입력한 뒤 이용할 수 있습니다.");
+      showLogin("공용 Supabase URL과 publishable key를 입력한 뒤 이용할 수 있습니다.");
       loginButton.disabled = true;
       return;
     }
-
     try {
       const { data, error } = await client.auth.getSession();
       if (error) throw error;
@@ -467,9 +478,11 @@
         return;
       }
       await verifyAdmin(data.session);
+      await loadGames();
       showDashboard();
+      resetForm();
       await loadNotices();
-      channel = site.subscribeToNotices(() => loadNotices());
+      channel = site.subscribeToNotices(loadNotices);
     } catch (error) {
       console.error(error);
       showLogin(error.message || "관리자 세션을 확인하지 못했습니다.");

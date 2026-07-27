@@ -1,15 +1,5 @@
-/**
- * Public client configuration.
- * Supabase anon key is designed to be used in browser apps.
- * Never place the service_role key in this file.
- */
 window.ZOMBOID_CONFIG = {
   siteBaseUrl: "https://choromi1.github.io/games/zomboid",
-
-  // Replace these two values after creating the Supabase project.
-  supabaseUrl: "https://dteuxildoqpgrqqiuilw.supabase.co",
-  supabaseAnonKey: "sb_publishable_DluO77PqPoP1siSilXIdQg_u0oWriQA",
-
   steamCollectionUrl: "",
   discordInviteUrl: "",
 
@@ -22,11 +12,5 @@ window.ZOMBOID_CONFIG = {
     address: "",
     port: "16261",
     passwordLabel: "참가자 별도 안내"
-  },
-
-  notice: {
-    pageSize: 8,
-    homeRecentCount: 3,
-    realtime: true
   }
 };
