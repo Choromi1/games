@@ -1,0 +1,270 @@
+From 2e4c176e96744c515be75533f9d9b08d72152dc0 Mon Sep 17 00:00:00 2001
+From: Choromi1 <gurwns0134@gmail.com>
+Date: Mon, 27 Jul 2026 12:02:34 +0900
+Subject: [PATCH] Build shared multi-game notice platform
+
+---
+ README.md                                     | 105 ++---
+ Valheim/index.html                            |  22 +-
+ Valheim/script.js                             |  31 ++
+ Valheim/styles.css                            |  34 ++
+ {zomboid/admin => admin}/admin.js             |  99 +++--
+ admin/index.html                              | 109 +++++
+ index.html                                    |   3 +
+ notices/index.html                            |  95 +++++
+ notices/notices.js                            | 246 ++++++++++++
+ shared/notice-config.example.js               |  14 +
+ shared/notice-config.js                       |  18 +
+ shared/notice-service.js                      | 266 +++++++++++++
+ shared/notices.css                            | 376 ++++++++++++++++++
+ supabase/README.md                            |  30 ++
+ supabase/config.toml                          |   4 +-
+ ...0260727025658_secure_notice_operations.sql | 138 +++++++
+ zomboid/admin/index.html                      | 108 +----
+ zomboid/config.example.js                     |  16 -
+ zomboid/config.js                             |  16 -
+ zomboid/index.html                            |   6 +-
+ zomboid/notices/index.html                    | 105 +----
+ zomboid/notices/notices.js                    | 165 --------
+ zomboid/site.js                               | 272 +------------
+ zomboid/supabase/README.md                    |  49 ---
+ zomboid/supabase/setup.sql                    | 184 ---------
+ 25 files changed, 1522 insertions(+), 989 deletions(-)
+ rename {zomboid/admin => admin}/admin.js (85%)
+ create mode 100644 admin/index.html
+ create mode 100644 notices/index.html
+ create mode 100644 notices/notices.js
+ create mode 100644 shared/notice-config.example.js
+ create mode 100644 shared/notice-config.js
+ create mode 100644 shared/notice-service.js
+ create mode 100644 shared/notices.css
+ create mode 100644 supabase/README.md
+ create mode 100644 supabase/migrations/20260727025658_secure_notice_operations.sql
+ delete mode 100644 zomboid/notices/notices.js
+ delete mode 100644 zomboid/supabase/README.md
+ delete mode 100644 zomboid/supabase/setup.sql
+
+diff --git a/README.md b/README.md
+index 5a485ce..3aa2cfd 100644
+--- a/README.md
++++ b/README.md
+@@ -1,88 +1,53 @@
+ # Choromi Game Servers
+ 
+-GitHub Pages 주소:
++GitHub Pages에서 게임별 서버 정보와 공용 공지를 제공합니다.
+ 
+-- 발헤임: `https://choromi1.github.io/games/Valheim/`
+-- 좀보이드: `https://choromi1.github.io/games/zomboid/`
+-- 좀보이드 공지: `https://choromi1.github.io/games/zomboid/notices/`
+-- 좀보이드 관리자: `https://choromi1.github.io/games/zomboid/admin/`
++## 주요 주소
+ 
+-## 저장소 조건
++- 게임 허브: `https://choromi1.github.io/games/`
++- 전체 공지: `https://choromi1.github.io/games/notices/`
++- Project Zomboid 공지: `https://choromi1.github.io/games/notices/?game=zomboid`
++- Valheim 공지: `https://choromi1.github.io/games/notices/?game=valheim`
++- 공지 관리자: `https://choromi1.github.io/games/admin/`
++- Project Zomboid: `https://choromi1.github.io/games/zomboid/`
++- Valheim: `https://choromi1.github.io/games/Valheim/`
+ 
+-저장소 이름은 `games`를 사용합니다. GitHub Pages는 `main` 브랜치의 `/(root)`에서 배포하도록 설정합니다.
++기존 `/zomboid/notices/`와 `/zomboid/admin/` 주소는 공용 페이지로 자동 ��결됩니다.
+ 
+ ## 폴더 구조
+ 
+ ```text
+ games/
+-├─ index.html
++├─ admin/                         # 공용 공지 관리자
++├─ notices/                       # 공용 공지 목록·상세
++├─ shared/
++│  ├─ notice-config.js            # 브라우저용 Supabase 공개 설정
++│  ├─ notice-service.js           # 게임별 공지 조회 공용 기능
++│  └─ notices.css                 # 공지·관리자 공용 스타일
++├─ supabase/
++│  ├─ migrations/                 # 운영 DB 변경 이력
++│  └─ README.md                   # 로컬 검증과 운영 적용 안내
+  ├─ Valheim/
+-│  ├─ index.html
+-│  ├─ styles.css
+-│  ├─ script.js
+-│  └─ assets/
+-└─ zomboid/
+-   ├─ index.html               # 공개 메인 페이지
+-   ├─ styles.css               # 공개/공지/관리자 공통 스타일
+-   ├─ config.js                # Supabase 및 서버 정보 설정
+-   ├─ config.example.js
+-   ├─ site.js                  # 공통 Supabase·UI 기능
+-   ├─ app.js                   # 메인 페이지 기능
+-   ├─ mods-data.js             # 적용 모드 데이터
+-   ├─ notices/
+-   │  ├─ index.html            # 전체 공지 및 상세 보기
+-   │  └─ notices.js
+-   ├─ admin/
+-   │  ├─ index.html            # 관리자 로그인·공지 관리
+-   │  └─ admin.js
+-   ├─ supabase/
+-   │  ├─ setup.sql             # DB, RLS, Storage, Realtime 설정
+-   │  └─ README.md
+-   └─ assets/
+-      └─ zomboid-main.webp
++├─ zomboid/
++└─ index.html
+ ```
+ 
+-## 좀보이드 페이지 포함 기능
++## 공지 기능
+ 
+-### 공개 페이지
++- `game_key`를 기준으로 전체 또는 게임별 공개 공지 조회
++- 잘못된 게임 키는 전체 공지로 우회하지 않고 오류 표시
++- 공지 상세 URL에서도 게임 문맥 유지
++- 게임 메인 페이지에는 해당 게임 공지만 표시
++- 관리자에서 대상 게임 선택, 게임별 필터, 작성·수정·삭제
++- 공개·예약·임시 저장, Markdown, 대표 이미지, 상단 고정
++- Supabase Realtime 자동 새로고침
+ 
+-- 최신 고정 공지와 최근 공지 표시
+-- 전체 공지 목록, 검색, 분류 필터, 페이지 이동
+-- 개별 공지 상세 페이지 및 링크 복사
+-- 서버 주소·포트·비밀번호 안내와 복사
+-- Steam Workshop 모드팩 링크
+-- 적용 모드 검색·카테고리 필터
+-- 진행 구조, 지역 위험도, 플레이 스타일, 운영 규칙, FAQ
+-- 모바일 반응형 UI
+-- Supabase Realtime 공지 자동 새로고침
+-
+-### 관리자 페이지
+-
+-- Supabase 이메일·비밀번호 로그인
+-- 관리자 권한 검사
+-- 공지 작성·수정·삭제
+-- 임시 저장, 즉시 공개, 예약 공개
+-- 중요 공지 상단 고정
+-- Markdown 작성 및 미리보기
+-- 대표 이미지 업로드·교체·삭제
+-- 공지 검색·분류·상태 필터
+-- 공개/예약/임시 저장 통계
+-
+-### 보안
++## 보안 원칙
+ 
+ - 일반 방문자는 공개 시각이 지난 `published` 공지만 조회
+-- `admin_users`에 등록된 계정만 작성·수정·삭제
+-- 공지 이미지 Storage도 관리자만 업로드·삭제
+-- 브라우저에는 공개 anon/publishable key만 사용
+-- `service_role` 또는 secret key는 코드에 넣지 않음
+-
+-## 적용 순서
+-
+-1. 저장소 루트에 이 파일들을 업로드합니다.
+-2. `zomboid/supabase/setup.sql`을 Supabase SQL Editor에서 실행합니다.
+-3. Supabase Auth에서 관리자 사용자를 만든 뒤 `admin_users`에 등록합니다.
+-4. `zomboid/config.js`에 Project URL과 anon/publishable key를 입력합니다.
+-5. Steam 컬렉션, 디스코드, 서버 주소 등 나머지 설정을 `config.js`에 입력합니다.
+-6. GitHub Pages 배포 후 `/games/zomboid/admin/`에서 로그인합니다.
++- `admin_users`에 등록된 사용자만 공지와 이미지를 변경
++- 공개 Storage URL은 사용할 수 있지만 버킷 파일 목록은 공개하지 않음
++- 관리자 판별 함수는 Data API에 노출되지 않는 `private` 스키마에 위치
++- 브라우저에는 publishable key만 사용하고 `service_role` 키는 넣지 않음
+ 
+-자세한 Supabase 설정은 `zomboid/supabase/README.md`를 확인합니다.
++DB 변경과 로컬 검증 방법은 [`supabase/README.md`](supabase/README.md)를 확인합니다.
+diff --git a/Valheim/index.html b/Valheim/index.html
+index 6ee04be..5c6d76e 100644
+--- a/Valheim/index.html
++++ b/Valheim/index.html
+@@ -42,6 +42,7 @@
+           <a href="/games/zomboid/">Project Zomboid</a>
+         </nav>
+         <nav class="global-page-links" aria-label="현재 페이지 메뉴">
++          <a href="#notices">공지</a>
+           <a href="#install">설치 기록</a>
+           <a href="#server">운영 기록</a>
+           <a href="#notes">운영 규칙</a>
+@@ -68,6 +69,22 @@
+     </header>
+ 
+     <main>
++      <section id="notices" aria-labelledby="notices-title">
++        <div class="section-inner">
++          <div class="section-head">
++            <div>
++              <div class="section-kicker">Valheim Notices</div>
++              <h2 id="notices-title">발헤임 공지</h2>
++              <p class="lead">발헤임을 대상으로 작성된 운영 공지와 기록을 확인합니다.</p>
++            </div>
++            <a class="btn" href="../notices/?game=valheim">전체 공지 보기</a>
++          </div>
++          <div class="shared-notice-list" id="valheim-notices" aria-live="polite">
++            <div class="shared-notice-empty">공지를 불러오는 중입니다.</div>
++          </div>
++        </div>
++      </section>
++
+       <section id="install" aria-labelledby="install-title">
+         <div class="section-inner">
+           <div class="section-head">
+@@ -161,13 +178,16 @@
+         <a href="/games/">게임 선택</a>
+         <a href="/games/Valheim/">Valheim</a>
+         <a href="/games/zomboid/">Project Zomboid</a>
+-        <a href="/games/zomboid/notices/">공지</a>
++        <a href="../notices/?game=valheim">공지</a>
+       </nav>
+       <small>© <span data-current-year></span> Choromi</small>
+     </footer>
+   </div>
+   <div class="toast" id="toast">Copied</div>
++  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+   <script src="../shared/chrome.js?v=1" defer></script>
++  <script src="../shared/notice-config.js?v=1" defer></script>
++  <script src="../shared/notice-service.js?v=1" defer></script>
+   <script src="./script.js?v=11" defer></script>
+ </body>
+ </html>
+diff --git a/Valheim/script.js b/Valheim/script.js
+index 5d158b6..69d6bb0 100644
+--- a/Valheim/script.js
++++ b/Valheim/script.js
+@@ -95,4 +95,35 @@ const mods = [
+       await copyTextToClipboard(code, "Profile code copied");
+     });
+ 
++    async function renderValheimNotices() {
++      const container = document.getElementById("valheim-notices");
++      const noticeSite = window.ChoromiNotices;
++      if (!container || !noticeSite) return;
++      try {
++        const notices = await noticeSite.fetchPublishedNotices(3, "valheim");
++        if (!notices.length) {
++          container.innerHTML = `<div class="shared-notice-empty">등록된 발헤임 공지가 없습니다.</div>`;
++          return;
++        }
++        container.innerHTML = notices.map((notice) => {
++          const category = noticeSite.categoryInfo(notice.category);
++          return `
++            <a class="shared-notice-card" href="${noticeSite.noticeUrl(notice.id, "valheim")}">
++              <div class="shared-notice-meta">
++                <span>${noticeSite.escapeHTML(category.label)}</span>
++                <time datetime="${noticeSite.escapeHTML(notice.published_at)}">${noticeSite.formatDate(notice.published_at)}</time>
++              </div>
++              <h3>${noticeSite.escapeHTML(notice.title)}</h3>
++              <p>${noticeSite.escapeHTML(notice.summary || "자세한 내용은 공지에서 확인해 주세요.")}</p>
++              <strong>자세히 보기 →</strong>
++            </a>
++          `;
++        }).join("");
++      } catch (error) {
++        console.error("발헤임 공지 로딩 실패", error);
++        container.innerHTML = `<div class="shared-notice-empty">공지를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.</div>`;
++      }
++    }
++
+     renderMods();
++    renderValheimNotices();
+ }
+-
+*** End Patch
