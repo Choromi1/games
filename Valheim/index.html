@@ -42,6 +42,7 @@
           <a href="/games/zomboid/">Project Zomboid</a>
         </nav>
         <nav class="global-page-links" aria-label="현재 페이지 메뉴">
+          <a href="#notices">공지</a>
           <a href="#install">설치 기록</a>
           <a href="#server">운영 기록</a>
           <a href="#notes">운영 규칙</a>
@@ -68,6 +69,22 @@
     </header>
 
     <main>
+      <section id="notices" aria-labelledby="notices-title">
+        <div class="section-inner">
+          <div class="section-head">
+            <div>
+              <div class="section-kicker">Valheim Notices</div>
+              <h2 id="notices-title">발헤임 공지</h2>
+              <p class="lead">발헤임을 대상으로 작성된 운영 공지와 기록을 확인합니다.</p>
+            </div>
+            <a class="btn" href="../notices/?game=valheim">전체 공지 보기</a>
+          </div>
+          <div class="shared-notice-list" id="valheim-notices" aria-live="polite">
+            <div class="shared-notice-empty">공지를 불러오는 중입니다.</div>
+          </div>
+        </div>
+      </section>
+
       <section id="install" aria-labelledby="install-title">
         <div class="section-inner">
           <div class="section-head">
@@ -161,13 +178,16 @@
         <a href="/games/">게임 선택</a>
         <a href="/games/Valheim/">Valheim</a>
         <a href="/games/zomboid/">Project Zomboid</a>
-        <a href="/games/zomboid/notices/">공지</a>
+        <a href="../notices/?game=valheim">공지</a>
       </nav>
       <small>© <span data-current-year></span> Choromi</small>
     </footer>
   </div>
   <div class="toast" id="toast">Copied</div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../shared/chrome.js?v=1" defer></script>
+  <script src="../shared/notice-config.js?v=1" defer></script>
+  <script src="../shared/notice-service.js?v=1" defer></script>
   <script src="./script.js?v=11" defer></script>
 </body>
 </html>
