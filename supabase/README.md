@@ -28,3 +28,25 @@ SQL migration으로 관리할 수 없는 항목은 Supabase Dashboard에서 확�
 - 적용 전 운영 DB 백업과 dry-run 결과 확인
 
 PR의 migration은 `main`에 병합하기 전 반드시 SQL 내용을 검토합니다.
+
+## Discord 공지 알림
+
+`notify-discord-notice` Edge Function은 공지가 즉시 공개될 때 Discord
+웹훅으로 한 번만 전송합니다.
+
+- 임시 저장 공지는 전송하지 않습니다.
+- 미래 공개 시각으로 저장한 공지는 자동 전송하지 않습니다.
+- 이미 전송된 공지를 수정해도 다시 전송하지 않습니다.
+- 기존 공개 공지는 migration 적용 시 소급 전송하지 않습니다.
+- Discord의 일시적인 오류는 한 호출 안에서 최대 3회 재시도합니다.
+
+운영 프로젝트의 Edge Function Secrets에는 다음 값을 등록합니다.
+
+```text
+DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/...
+```
+
+웹훅 URL은 저장소, 브라우저 JavaScript 또는 SQL migration에 기록하지
+않습니다. Database Vault에는 Edge Function 호출용 URL과 임의 토큰을
+각각 `notice_discord_function_url`,
+`notice_discord_dispatch_token` 이름으로 저장합니다.
