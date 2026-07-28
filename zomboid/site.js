@@ -7,8 +7,8 @@
 
   function applySiteConfig() {
     const server = config.server || {};
-    document.querySelectorAll("[data-game-version]").forEach((element) => { element.textContent = server.gameVersion || "Build 42"; });
-    document.querySelectorAll("[data-player-count]").forEach((element) => { element.textContent = server.playerCount || "4~5명"; });
+    document.querySelectorAll("[data-game-version]").forEach((element) => { element.textContent = server.gameVersion || "Build 42.20+"; });
+    document.querySelectorAll("[data-player-count]").forEach((element) => { element.textContent = server.playerCount || "5 Players"; });
     document.querySelectorAll("[data-server-status]").forEach((element) => { element.textContent = server.status || "준비 중"; });
     document.querySelectorAll("[data-server-message]").forEach((element) => { element.textContent = server.statusMessage || "서버 준비 중입니다."; });
     document.querySelectorAll("[data-open-date]").forEach((element) => { element.textContent = server.openDate || "오픈일 추후 공지"; });
@@ -20,7 +20,9 @@
     if (port) port.textContent = server.port || "16261";
     if (password) password.textContent = server.passwordLabel || "참가자 별도 안내";
 
-    configureLink(document.getElementById("discord-link"), config.discordInviteUrl, "디스코드 링크 준비 중");
+    document.querySelectorAll("[data-discord-link]").forEach((element) => {
+      configureLink(element, config.discordInviteUrl, "디스코드 링크 준비 중");
+    });
     configureLink(document.getElementById("workshop-link"), config.steamCollectionUrl, "Steam 컬렉션 준비 중");
   }
 

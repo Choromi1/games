@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Choromi Project Zomboid 데디케이트 서버의 준비 현황, 공지, 모드팩과 플레이 규칙을 확인하세요." />
+  <meta name="description" content="Choromi Project Zomboid 데디케이트 서버의 준비 현황, 공지, 모드팩과 주차별 캠페인을 확인하세요." />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <meta name="theme-color" content="#11150e" />
   <title>Choromi Project Zomboid Server</title>
@@ -14,7 +14,7 @@
   <meta property="og:locale" content="ko_KR" />
   <meta property="og:site_name" content="Choromi Game Servers" />
   <meta property="og:title" content="Choromi Project Zomboid Server" />
-  <meta property="og:description" content="Build 42 기반 데디케이트 서버의 준비 현황, 공지, 모드팩과 플레이 규칙을 확인하세요." />
+  <meta property="og:description" content="Build 42.20+ 기반 데디케이트 서버의 준비 현황, 공지, 모드팩과 주차별 캠페인을 확인하세요." />
   <meta property="og:url" content="https://choromi1.github.io/games/zomboid/" />
   <meta property="og:image" content="https://choromi1.github.io/games/shared/assets/choromi-og.png" />
   <meta property="og:image:width" content="1200" />
@@ -22,10 +22,10 @@
   <meta property="og:image:alt" content="바이킹 캠프와 좀비 도시를 배경으로 한 Choromi Game Servers 공유 이미지" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Choromi Project Zomboid Server" />
-  <meta name="twitter:description" content="Build 42 기반 데디케이트 서버의 준비 현황과 플레이 정보를 확인하세요." />
+  <meta name="twitter:description" content="Build 42.20+ 기반 데디케이트 서버의 준비 현황과 주차별 캠페인을 확인하세요." />
   <meta name="twitter:image" content="https://choromi1.github.io/games/shared/assets/choromi-og.png" />
   <meta name="twitter:image:alt" content="바이킹 캠프와 좀비 도시를 배경으로 한 Choromi Game Servers 공유 이미지" />
-  <link rel="stylesheet" href="./styles.css?v=22" />
+  <link rel="stylesheet" href="./styles.css?v=23" />
   <link rel="stylesheet" href="../shared/chrome.css?v=3" />
 </head>
 <body class="theme-zomboid">
@@ -46,7 +46,7 @@
           <a href="#server">서버 정보</a>
           <a href="#mods">모드팩</a>
           <a href="#campaign">진행 구조</a>
-          <a href="#rules">규칙</a>
+          <a href="#map">PZ 지도</a>
           <a href="#faq">FAQ</a>
         </nav>
       </div>
@@ -60,10 +60,10 @@
       <div class="hero-content">
         <span class="eyebrow">Project Zomboid Dedicated Server</span>
         <h1>살아남고,<br />끝내 탈출하라.</h1>
-        <p class="hero-copy">거점을 성장시키고 위험 지역을 단계적으로 돌파해 최종 탈출 조건을 완성하는 4~5인 협동 생존 서버입니다.</p>
+        <p class="hero-copy">거점을 성장시키고 위험 지역을 단계적으로 돌파해 최종 탈출 조건을 완성하는 5인 협동 생존 서버입니다.</p>
         <div class="hero-meta">
-          <span class="pill" data-game-version>Build 42</span>
-          <span class="pill" data-player-count>4–5 Players</span>
+          <span class="pill" data-game-version>Build 42.20+</span>
+          <span class="pill" data-player-count>5 Players</span>
           <span class="pill">Modded Co-op</span>
           <span class="pill warning" data-open-date>오픈일 추후 공지</span>
         </div>
@@ -112,8 +112,6 @@
 
           <div class="server-layout">
             <div class="server-card-grid">
-              <article class="info-card"><span>게임 버전</span><strong data-game-version>Build 42</strong><small>모드 호환성에 따라 변경될 수 있습니다.</small></article>
-              <article class="info-card"><span>예상 인원</span><strong data-player-count>4~5명</strong><small>협동 플레이 중심의 소규모 서버입니다.</small></article>
               <article class="info-card"><span>서버 상태</span><strong data-server-status>준비 중</strong><small data-server-message>구성과 모드 테스트를 진행하고 있습니다.</small></article>
               <article class="info-card"><span>최종 목표</span><strong>탈출 작전 완수</strong><small>단순 생존을 넘어 최종 지역 돌파가 목표입니다.</small></article>
             </div>
@@ -128,7 +126,7 @@
               </dl>
               <div class="panel-actions">
                 <button class="button primary full" id="copy-server-address" type="button">서버 주소 복사</button>
-                <a class="button secondary full" id="discord-link" href="#" target="_blank" rel="noopener">디스코드 열기</a>
+                <a class="button secondary full" id="discord-link" data-discord-link href="#" target="_blank" rel="noopener">디스코드 열기</a>
               </div>
             </aside>
           </div>
@@ -188,16 +186,76 @@
             <div>
               <p class="section-kicker">Campaign Flow</p>
               <h2 id="campaign-title">생존에서 탈출까지</h2>
-              <p class="lead">초반 생활권은 비교적 여유롭게, 탈출에 가까워질수록 전투와 준비 부담이 커지는 구조입니다.</p>
+              <p class="lead">매주 달성할 목표를 하나씩 쌓아 올리고, 준비 상황에 따라 다음 단계로 넘어갑니다. 실제 진행 속도에 맞춰 일정은 조정될 수 있습니다.</p>
             </div>
           </div>
 
           <div class="campaign-flow">
-            <article><span>01</span><div><small>SURVIVE</small><h3>초기 생존</h3><p>식량과 의약품을 확보하고 임시 거점을 마련합니다.</p></div></article>
-            <article><span>02</span><div><small>BUILD</small><h3>거점 성장</h3><p>농사, 발전기, 차량, 제작 시설과 장기 비축 체계를 갖춥니다.</p></div></article>
-            <article><span>03</span><div><small>EXPLORE</small><h3>지역 탐사</h3><p>도시와 특수 지역을 조사하며 희귀 장비와 탈출 단서를 찾습니다.</p></div></article>
-            <article><span>04</span><div><small>PREPARE</small><h3>탈출 준비</h3><p>총기, 탄약, 차량, 치료 물품을 모으고 작전 경로를 정찰합니다.</p></div></article>
-            <article class="critical"><span>05</span><div><small>ESCAPE</small><h3>최종 작전</h3><p>고밀도 좀비 구역을 돌파하고 서버의 최종 조건을 완성합니다.</p></div></article>
+            <article>
+              <span>W1</span>
+              <div>
+                <small>1주차 · SURVIVE</small>
+                <h3>생존권과 공용 거점 확보</h3>
+                <p>안전한 생활권을 정하고 5명이 각자 접속해도 유지할 수 있는 최소 기반을 만듭니다.</p>
+                <ul class="campaign-goals">
+                  <li>공용 거점 위치 확정</li>
+                  <li>식량·의약품 기본 비축</li>
+                  <li>운행 가능한 차량 확보</li>
+                </ul>
+              </div>
+            </article>
+            <article>
+              <span>W2</span>
+              <div>
+                <small>2주차 · BUILD</small>
+                <h3>장기 생존 기반 완성</h3>
+                <p>정전과 단수 이후에도 거점이 멈추지 않도록 전력, 물, 식량과 정비 체계를 갖춥니다.</p>
+                <ul class="campaign-goals">
+                  <li>발전기·연료 운용</li>
+                  <li>식수·농사 체계 구축</li>
+                  <li>차량 정비와 예비 부품 확보</li>
+                </ul>
+              </div>
+            </article>
+            <article>
+              <span>W3</span>
+              <div>
+                <small>3주차 · EXPLORE</small>
+                <h3>주요 시설과 보급로 개척</h3>
+                <p>병원, 경찰서, 창고 등 핵심 시설을 조사하고 반복해서 이동할 수 있는 안전 경로를 만듭니다.</p>
+                <ul class="campaign-goals">
+                  <li>핵심 시설 탐사</li>
+                  <li>지도에 위험·보급 지점 공유</li>
+                  <li>총기·의약품 집중 확보</li>
+                </ul>
+              </div>
+            </article>
+            <article>
+              <span>W4</span>
+              <div>
+                <small>4주차 · PREPARE</small>
+                <h3>탈출 작전 준비와 리허설</h3>
+                <p>최종 지역 진입에 필요한 인원별 장비를 정리하고 주 경로와 후퇴 경로를 직접 점검합니다.</p>
+                <ul class="campaign-goals">
+                  <li>주력·예비 차량 준비</li>
+                  <li>개인별 전투·치료 물자 배분</li>
+                  <li>진입·후퇴 경로 사전 답사</li>
+                </ul>
+              </div>
+            </article>
+            <article class="critical">
+              <span>W5</span>
+              <div>
+                <small>5주차 · ESCAPE</small>
+                <h3>최종 탈출 작전</h3>
+                <p>5명의 역할을 나누고 고밀도 좀비 구역을 돌파해 서버의 최종 조건을 완성합니다.</p>
+                <ul class="campaign-goals">
+                  <li>전투·운전·지원 역할 확정</li>
+                  <li>최종 지역 동시 진입</li>
+                  <li>탈출 조건 달성</li>
+                </ul>
+              </div>
+            </article>
           </div>
 
           <div class="danger-grid" aria-label="지역별 위험도">
@@ -210,42 +268,32 @@
         </div>
       </section>
 
-      <section class="section" id="playstyle" aria-labelledby="playstyle-title">
+      <section class="section map-section" id="map" aria-labelledby="map-title">
         <div class="section-inner">
-          <div class="section-head">
+          <div class="section-head map-head">
             <div>
-              <p class="section-kicker">Core Playstyle</p>
-              <h2 id="playstyle-title">전투와 생활이 함께 굴러가는 서버</h2>
-              <p class="lead">총기를 잘 다루는 플레이어뿐 아니라 거점을 유지하는 플레이어도 캠페인의 핵심입니다.</p>
+              <p class="section-kicker">Project Zomboid Map</p>
+              <h2 id="map-title">PZ 지도</h2>
+              <p class="lead">커뮤니티 지도를 간단히 살펴보거나, 전체 화면을 새 탭에서 열어 좌표와 시설을 자세히 확인할 수 있습니다.</p>
             </div>
+            <a class="button primary" href="https://map.projectzomboid.com/" target="_blank" rel="noopener noreferrer">전체 지도 새 탭에서 열기 ↗</a>
           </div>
 
-          <div class="feature-grid">
-            <article><span>A</span><h3>총기와 전투</h3><p>총기는 강력하지만 소음과 탄약 소비가 큽니다. 근접 무기, 유인, 후퇴 경로를 함께 준비합니다.</p><ul><li>총기 및 탄약 확장</li><li>대규모 좀비 유입 위험</li><li>작전별 장비 배분</li></ul></article>
-            <article><span>B</span><h3>생활과 거점</h3><p>농사와 요리, 발전기, 창고 정리, 방어 시설이 장기 작전의 지속 시간을 결정합니다.</p><ul><li>식량 생산과 보존</li><li>거점 건설 및 방어</li><li>의약품·장비 비축</li></ul></article>
-            <article><span>C</span><h3>차량과 정비</h3><p>차량은 이동 수단이자 탈출 작전의 핵심 자원입니다. 연료와 부품, 예비 차량을 관리합니다.</p><ul><li>차량 수리와 부품 관리</li><li>연료 보급망 구축</li><li>비상 철수 차량 준비</li></ul></article>
-            <article><span>D</span><h3>탐사와 기록</h3><p>지도 표시와 정찰 결과를 공유해 안전 경로, 물자 위치, 위험 구역을 팀 자산으로 축적합니다.</p><ul><li>도시 및 특수 지역 탐사</li><li>지도 기록과 경로 공유</li><li>탈출 단서 수집</li></ul></article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="rules" aria-labelledby="rules-title">
-        <div class="section-inner">
-          <div class="section-head">
-            <div>
-              <p class="section-kicker">Server Rules</p>
-              <h2 id="rules-title">협동 플레이 기본 규칙</h2>
-              <p class="lead">진행을 막는 통제보다 서로의 시간과 준비물을 지키기 위한 최소 규칙입니다.</p>
+          <div class="pz-map-shell">
+            <div class="pz-map-toolbar">
+              <span><i></i> map.projectzomboid.com</span>
+              <small>외부 지도 · 지연 로딩</small>
             </div>
+            <iframe
+              class="pz-map-frame"
+              src="https://map.projectzomboid.com/"
+              title="Project Zomboid 커뮤니티 지도"
+              loading="lazy"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allow="fullscreen"
+            ></iframe>
           </div>
-          <div class="rules-grid">
-            <article><span>01</span><div><h3>개인·공용 물품 구분</h3><p>희귀 물자와 중요 장비는 소유자 또는 팀원에게 알린 뒤 사용합니다.</p></div></article>
-            <article><span>02</span><div><h3>거점 변경은 먼저 공유</h3><p>창고 재배치, 벽 철거, 발전기 이동 등은 다른 참가자와 상의합니다.</p></div></article>
-            <article><span>03</span><div><h3>버그·복사 악용 금지</h3><p>아이템 복사나 비정상 경험치 획득처럼 진행을 무너뜨리는 행동은 사용하지 않습니다.</p></div></article>
-            <article><span>04</span><div><h3>좀비 유입 즉시 공유</h3><p>거점 방향으로 무리가 이동하거나 차량 경적 사고가 발생하면 팀에 먼저 알립니다.</p></div></article>
-            <article><span>05</span><div><h3>주요 콘텐츠는 함께</h3><p>탈출 관련 지역과 특수 시설, 대규모 전투는 여러 명이 접속했을 때 진행합니다.</p></div></article>
-            <article><span>06</span><div><h3>사망 복구보다 생존 우선</h3><p>위험 지역의 장비는 무리하게 회수하지 않고 인원을 재정비한 뒤 접근합니다.</p></div></article>
-          </div>
+          <p class="map-note">지도가 보이지 않거나 작은 화면에서 조작하기 어렵다면 위의 새 탭 버튼을 이용해 주세요.</p>
         </div>
       </section>
 
@@ -254,14 +302,16 @@
           <div class="section-head">
             <div>
               <p class="section-kicker">Frequently Asked Questions</p>
-              <h2 id="faq-title">자주 묻는 질문</h2>
+              <h2 id="faq-title">문제가 생겼나요?</h2>
             </div>
           </div>
-          <div class="faq-list">
-            <details><summary>모드를 직접 하나씩 찾아 설치해야 하나요?</summary><p>아니요. 서버용 Steam 창작마당 컬렉션에서 ‘모두 구독’을 누르면 필요한 모드를 한 번에 받을 수 있습니다.</p></details>
-            <details><summary>전투를 잘하지 못해도 참여할 수 있나요?</summary><p>가능합니다. 농사, 요리, 정비, 건축, 물자 관리와 지도 기록도 서버 진행에 중요한 역할입니다.</p></details>
-            <details><summary>캐릭터가 사망하면 서버 진행에서 제외되나요?</summary><p>아닙니다. 새로운 캐릭터로 다시 합류할 수 있으며, 장비 복구는 생존 가능성을 우선해 결정합니다.</p></details>
-            <details><summary>모드 업데이트 후 접속 오류가 나면 어떻게 하나요?</summary><p>Steam과 게임을 재시작한 뒤 문제가 계속되면 오류 화면과 console.txt 로그를 디스코드에 공유합니다.</p></details>
+          <div class="support-card">
+            <div>
+              <span>Discord Support</span>
+              <h3>접속·모드·플레이 중 문제가 발생하면 디스코드로 문의해 주세요.</h3>
+              <p>가능하다면 오류 화면이나 <code>console.txt</code> 로그를 함께 보내주면 더 빠르게 확인할 수 있습니다.</p>
+            </div>
+            <a class="button primary" data-discord-link href="#" target="_blank" rel="noopener">디스코드에서 문의하기</a>
           </div>
         </div>
       </section>
@@ -290,8 +340,8 @@
   <script src="../shared/chrome.js?v=1"></script>
   <script src="../shared/notice-config.js?v=1"></script>
   <script src="../shared/notice-service.js?v=1"></script>
-  <script src="./config.js?v=20"></script>
-  <script src="./site.js?v=20"></script>
+  <script src="./config.js?v=21"></script>
+  <script src="./site.js?v=21"></script>
   <script src="./mods-data.js?v=20"></script>
   <script src="./app.js?v=20"></script>
 </body>
