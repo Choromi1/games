@@ -382,6 +382,11 @@ inspector_port = 8083
 # The Deno major version to use.
 deno_version = 2
 
+[functions.notify-discord-notice]
+# Requests are authenticated inside the function with a random token stored in
+# Supabase Vault. The Discord webhook URL remains an Edge Function secret.
+verify_jwt = false
+
 # [edge_runtime.secrets]
 # secret_key = "env(SECRET_VALUE)"
 
